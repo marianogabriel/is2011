@@ -1,7 +1,7 @@
+*.class
 .settings/
 bin/
 jar/
 war/WEB-INF/appengine-generated/
-*class
 *~
 *iml
