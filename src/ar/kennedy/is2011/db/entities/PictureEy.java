@@ -23,8 +23,11 @@ public class PictureEy implements Serializable {
 	@Column(name="PICTURE_ID")
 	private String pictureId;
 	
-	@Column(name="BYTES")
-	private Blob bytes;
+	@Column(name="CONTENT")
+	private Blob content;
+	
+	@Column(name="LINK")
+	private String link;
 	
 	@Column(name="CREATE_DATE")
 	private Date createDate;
@@ -43,13 +46,21 @@ public class PictureEy implements Serializable {
 	public void setPictureId(String pictureId) {
 		this.pictureId = pictureId;
 	}
-
-	public Blob getBytes() {
-		return bytes;
+	
+	public Blob getContent() {
+		return content;
 	}
 
-	public void setBytes(Blob bytes) {
-		this.bytes = bytes;
+	public void setContent(Blob content) {
+		this.content = content;
+	}
+
+	public String getLink() {
+		return link;
+	}
+
+	public void setLink(String link) {
+		this.link = link;
 	}
 
 	public Date getCreateDate() {

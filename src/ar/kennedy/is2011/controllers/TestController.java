@@ -1,17 +1,16 @@
 package ar.kennedy.is2011.controllers;
 
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.Date;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import ar.kennedy.is2011.db.dao.AbstractDao;
 import ar.kennedy.is2011.db.entities.PictureEy;
+import ar.kennedy.is2011.session.Session;
 
 import com.google.appengine.api.datastore.Blob;
 
@@ -22,7 +21,7 @@ public class TestController extends AbstractController {
 	
 	private static final long serialVersionUID = 7320911254853012236L;
 
-	protected void action(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void action(HttpServletRequest request, HttpServletResponse response, Session session) throws Exception {
 		AbstractDao<PictureEy> dao = new AbstractDao<PictureEy>();
 		PictureEy picture = new PictureEy();
 		
@@ -32,14 +31,14 @@ public class TestController extends AbstractController {
 			picture.setPictureId("32249_2323.jpg");
 			picture.setCreateDate(new Date());
 			picture.setLastUpdated(new Date());
-			picture.setBytes(new Blob(inputStramToByteArray(resource)));
+			picture.setContent(new Blob(inputStramToByteArray(resource)));
 			
 			dao.persist(picture);
 			
 			PictureEy result = dao.findById(PictureEy.class, "32249_2323.jpg");
 			
 			response.setContentType("image/jpg");
-			response.getOutputStream().write(result.getBytes().getBytes());
+			response.getOutputStream().write(result.getContent().getBytes());
 			
 		} catch(Exception e) {
 			System.out.println("Error: " + e.getMessage());
@@ -56,6 +55,10 @@ public class TestController extends AbstractController {
 		 }
 		 
 		 return byteArrayOutputStream.toByteArray();
+	}
+
+	public boolean validateLogin() {
+		return false;
 	}
 	
 }

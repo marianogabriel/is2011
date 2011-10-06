@@ -13,6 +13,15 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 		<servlet-name>TestController</servlet-name>
 		<url-pattern>/test</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>ImageProxyController</servlet-name>
+		<servlet-class>ar.kennedy.is2011.controllers.ImageProxyController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ImageProxyController</servlet-name>
+		<url-pattern>/image</url-pattern>
+	</servlet-mapping>
 
 	<welcome-file-list>
 		<welcome-file>index.jsp</welcome-file>

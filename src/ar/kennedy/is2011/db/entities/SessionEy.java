@@ -23,14 +23,17 @@ public class SessionEy implements Serializable {
 	@Column(name="SESSION_ID")
 	private String sessionId;
 	
-	@Column(name="BYTES")
-	private Blob bytes;
+	@Column(name="CONTENT")
+	private Blob content;
 	
-	@Column(name="CREATE_DATE")
-	private Date createDate;
+	@Column(name="STATUS")
+	private String status;
 	
-	@Column(name="LAST_UPDATED")
-	private Date lastUpdated;
+	@Column(name="DATE_CREATED")
+	private Date dateCreated;
+	
+	@Column(name="DATE_UPDATED")
+	private Date dateUpdated;
 	
 	public SessionEy() {
 		super();
@@ -44,28 +47,36 @@ public class SessionEy implements Serializable {
 		this.sessionId = sessionId;
 	}
 
-	public Blob getBytes() {
-		return bytes;
+	public Blob getContent() {
+		return content;
 	}
 
-	public void setBytes(Blob bytes) {
-		this.bytes = bytes;
+	public void setContent(Blob content) {
+		this.content = content;
 	}
 
-	public Date getCreateDate() {
-		return createDate;
+	public String getStatus() {
+		return status;
 	}
 
-	public void setCreateDate(Date createDate) {
-		this.createDate = createDate;
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
-	public Date getLastUpdated() {
-		return lastUpdated;
+	public Date getDateCreated() {
+		return dateCreated;
 	}
 
-	public void setLastUpdated(Date lastUpdated) {
-		this.lastUpdated = lastUpdated;
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = dateCreated;
+	}
+
+	public Date getDateUpdated() {
+		return dateUpdated;
+	}
+
+	public void setDateUpdated(Date dateUpdated) {
+		this.dateUpdated = dateUpdated;
 	}
 	
 }
