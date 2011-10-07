@@ -3,6 +3,5 @@
 bin/
 jar/
 war/WEB-INF/appengine-generated/
-war/WEB-INF/classes/ar/
 *~
 *iml
