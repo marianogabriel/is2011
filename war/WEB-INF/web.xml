@@ -27,4 +27,6 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 		<welcome-file>index.html</welcome-file>
 	</welcome-file-list>
 	
+	<!-- Algo  -- >
+	
 </web-app>
