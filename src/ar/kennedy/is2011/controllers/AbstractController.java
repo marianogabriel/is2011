@@ -62,7 +62,11 @@ public abstract class AbstractController extends HttpServlet implements Controll
 			
 		} catch(Exception e) {
 			log.error("Unexpected error", e);
-			response.sendRedirect("error.jsp");
+			
+			try {
+				response.getWriter().print(WebUtils.getStackStrace(e)); //response.sendRedirect("error.jsp");
+			
+			} catch(Exception ex) {}
 		}
 		
 	}

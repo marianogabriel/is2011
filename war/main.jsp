@@ -1,13 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" extends="ar.kennedy.is2011.controllers.AbstractController"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@page import="ar.kennedy.is2011.db.entities.UserEy"%>
 <%@page import="ar.kennedy.is2011.session.SessionManager"%>
 <%@page import="ar.kennedy.is2011.utils.WebUtils"%>
 <%@page import="ar.kennedy.is2011.models.SearchModel"%>
-<%!
-	public boolean validateLogin() {
-		return true;		
-	}
-%>
 <%
 	SearchModel searchModel = new SearchModel();
 	UserEy user = (UserEy) SessionManager.get(request, WebUtils.getSessionIdentificator(request)).getElement("user");

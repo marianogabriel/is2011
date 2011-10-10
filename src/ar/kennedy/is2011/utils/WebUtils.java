@@ -1,5 +1,7 @@
 package ar.kennedy.is2011.utils;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -160,5 +162,26 @@ public class WebUtils {
 	public static String decrypt(String value) {
 		return StringUtils.replaceChars(value, Constants.NOT_ORDERER_STRING, Constants.ORDERER_STRING);
 	}
+	
+    public static String getStackStrace(Throwable e) throws Exception {
+    	ByteArrayOutputStream byteArrayOutputStream = null;
+    	PrintStream printStream = null;
+    	
+    	try {
+	    	byteArrayOutputStream = new ByteArrayOutputStream();
+	        printStream = new PrintStream(byteArrayOutputStream);
+	        e.printStackTrace(printStream);
+	        byteArrayOutputStream.flush();
+	        
+	        return WebUtils.stripXss(byteArrayOutputStream.toString());
+    	
+    	} finally {
+	        byteArrayOutputStream.close();
+    	}
+    }
+    
+    private static String stripXss(String input) {
+    	return input.replace("&", "&amp;").replace("#", "&#35;").replace("<", "&lt;").replace(">", "&gt;").replace("(", "&#40;").replace(")", "&#41;");
+    }
 	
 }
