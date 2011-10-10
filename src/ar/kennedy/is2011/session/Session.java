@@ -1,6 +1,7 @@
 package ar.kennedy.is2011.session;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,6 +15,8 @@ public class Session implements Serializable {
 	protected String id;
 	protected Map<String, Object> content = null;
 	protected String status;
+	protected Date dateCreated;
+	protected Date dateUpdated;
 	
 	public Session() {
 		super();
@@ -59,6 +62,22 @@ public class Session implements Serializable {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public Date getDateCreated() {
+		return dateCreated;
+	}
+
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = dateCreated;
+	}
+
+	public Date getDateUpdated() {
+		return dateUpdated;
+	}
+
+	public void setDateUpdated(Date dateUpdated) {
+		this.dateUpdated = dateUpdated;
 	}
 	
 }

@@ -5,13 +5,24 @@ xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
 http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 
+	<!-- START Spring Mappings -->
+
 	<servlet>
-		<servlet-name>TestController</servlet-name>
-		<servlet-class>ar.kennedy.is2011.controllers.TestController</servlet-class>
+		<servlet-name>LoginController</servlet-name>
+		<servlet-class>ar.kennedy.is2011.controllers.LoginController</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>TestController</servlet-name>
-		<url-pattern>/test</url-pattern>
+		<servlet-name>LoginController</servlet-name>
+		<url-pattern>/login</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>LogoutController</servlet-name>
+		<servlet-class>ar.kennedy.is2011.controllers.LogoutController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>LogoutController</servlet-name>
+		<url-pattern>/logout</url-pattern>
 	</servlet-mapping>
 	
 	<servlet>
@@ -22,9 +33,85 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 		<servlet-name>ImageProxyController</servlet-name>
 		<url-pattern>/image</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>ImageUploaderController</servlet-name>
+		<servlet-class>ar.kennedy.is2011.controllers.ImageUploaderController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ImageUploaderController</servlet-name>
+		<url-pattern>/upload</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>TestController</servlet-name>
+		<servlet-class>ar.kennedy.is2011.controllers.TestController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>TestController</servlet-name>
+		<url-pattern>/test</url-pattern>
+	</servlet-mapping>
+
+	<!-- END Spring Mappings -->
+
+	<!-- START REST Mappings -->
+
+	<servlet>
+		<servlet-name>Forward</servlet-name>
+		<servlet-class>ar.kennedy.appEngine.controllers.ForwardServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>Logout</servlet-name>
+		<servlet-class>ar.kennedy.appEngine.controllers.LogoutUsuarioServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>Login</servlet-name>
+		<servlet-class>ar.kennedy.appEngine.controllers.LoginUsuarioServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>Registracion</servlet-name>
+		<servlet-class>ar.kennedy.appEngine.controllers.RegistracionUsuarioServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>EditarCuenta</servlet-name>
+		<servlet-class>ar.kennedy.appEngine.controllers.EditarCuentaUsuarioServlet</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>Logout</servlet-name>
+		<url-pattern>/logout_beta</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Login</servlet-name>
+		<url-pattern>/login_beta</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Registracion</servlet-name>
+		<url-pattern>/Registracion</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Forward</servlet-name>
+		<url-pattern>/forward</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>EditarCuenta</servlet-name>
+		<url-pattern>/editarCuenta</url-pattern>
+	</servlet-mapping>
+	
+	<filter>
+        <filter-name>SessionFilter</filter-name>
+        <filter-class>ar.kennedy.is2011.theClouds.manager.SessionFilter</filter-class>
+    </filter>
+    
+    <filter-mapping>
+        <filter-name>SessionFilter</filter-name>
+        <url-pattern>jsp/*</url-pattern>  		  		  		
+    </filter-mapping>
+
+	<!-- END REST Mappings -->
 
 	<welcome-file-list>
-		<welcome-file>index.html</welcome-file>
+		<welcome-file>jsp/loginUsuario.jsp</welcome-file>
 	</welcome-file-list>
 	
 </web-app>

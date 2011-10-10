@@ -1,6 +1,8 @@
 package ar.kennedy.is2011.session;
 
-import java.sql.Timestamp;
+import java.util.Date;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 
@@ -22,24 +24,32 @@ public class SessionManager {
 
 	private SessionManager() { }
 	
-	public static Session create(String sessionId) {
+	public static Session create(HttpServletRequest request, String sessionId) {
 		SessionEy sessionEy = null;
 		Session session = null;
 		
 		try {
-			sessionEy = new SessionEy();
 			session = new Session();
 			
 			session.setId(sessionId);
 			session.setStatus(Constants.SESSION_STATUS_ACTIVE);
-		
-			sessionEy.setSessionId(sessionId);
-			sessionEy.setDateCreated(new Timestamp(new java.util.Date().getTime()));
-			sessionEy.setDateUpdated(sessionEy.getDateUpdated());
-			sessionEy.setContent(new Blob(FileUtils.ObjectToByteArray(session)));
-			sessionEy.setStatus(session.getStatus());
+			session.setDateCreated(new java.util.Date());
+			session.setDateUpdated(session.getDateUpdated());
 			
-			sessionDao.persist(sessionEy);
+			if(Constants.SESSION_MODE.equals("db")) {
+				sessionEy = new SessionEy();
+				
+				sessionEy.setSessionId(sessionId);
+				sessionEy.setDateCreated(session.getDateCreated());
+				sessionEy.setDateUpdated(session.getDateUpdated());
+				sessionEy.setContent(new Blob(FileUtils.ObjectToByteArray(session)));
+				sessionEy.setStatus(session.getStatus());
+				
+				sessionDao.persist(sessionEy);
+			
+			} else {
+				request.getSession(true).setAttribute(sessionId, session);
+			}
 			
 		} catch(Exception e) {
 			log.error("Can't create session object", e);
@@ -49,15 +59,20 @@ public class SessionManager {
 		return session;
 	}
 	
-	public static Session get(String sessionId) {
+	public static Session get(HttpServletRequest request, String sessionId) {
 		SessionEy sessionEy = null;
 		Session session = null;
 		
 		try {
-			sessionEy = sessionDao.findById(SessionEy.class, sessionId);
+			if(Constants.SESSION_MODE.equals("db")) {
+				sessionEy = sessionDao.findById(SessionEy.class, sessionId);
+				
+				if(sessionEy != null) {
+					session = (Session) FileUtils.byteArrayToObject(sessionEy.getContent().getBytes());
+				}
 			
-			if(sessionEy != null) {
-				session = (Session) FileUtils.byteArrayToObject(sessionEy.getContent().getBytes());
+			} else {
+				session = (Session) request.getSession().getAttribute(sessionId);
 			}
 		
 		} catch(Exception e) {
@@ -68,17 +83,24 @@ public class SessionManager {
 		return session;
 	}
 	
-	public void save(Session session) {
+	public static void save(HttpServletRequest request, Session session) {
 		try {
-			SessionEy sessionEy = new SessionEy();
+			session.setDateUpdated(new Date());
 			
-			sessionEy.setSessionId(session.getId());
-			sessionEy.setDateCreated(new java.util.Date());
-			sessionEy.setDateUpdated(sessionEy.getDateCreated());
-			sessionEy.setContent(new Blob(FileUtils.ObjectToByteArray(session)));
-			sessionEy.setStatus(session.getStatus());
-		
-			sessionDao.persist(sessionEy);
+			if(Constants.SESSION_MODE.equals("db")) {
+				SessionEy sessionEy = new SessionEy();
+				
+				sessionEy.setSessionId(session.getId());
+				sessionEy.setDateCreated(session.getDateCreated());
+				sessionEy.setDateUpdated(session.getDateUpdated());
+				sessionEy.setContent(new Blob(FileUtils.ObjectToByteArray(session)));
+				sessionEy.setStatus(session.getStatus());
+			
+				sessionDao.persist(sessionEy);
+			
+			} else {
+				request.getSession().setAttribute(session.getId(), session);
+			}
 			
 		} catch(Exception e) {
 			log.error("Can't save session object", e);
@@ -86,9 +108,14 @@ public class SessionManager {
 		}
 	}
 	
-	public void delete(String sessionId) {
+	public static void delete(HttpServletRequest request, String sessionId) {
 		try {
-			sessionDao.remove(SessionEy.class, sessionId);
+			if(Constants.SESSION_MODE.equals("db")) {
+				sessionDao.remove(SessionEy.class, sessionId);
+			
+			} else {
+				request.getSession().invalidate();
+			}
 		
 		} catch(Exception e) {
 			log.error("Can't delete session object", e);

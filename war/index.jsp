@@ -1,3 +1,9 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" extends="ar.kennedy.is2011.controllers.AbstractController"%>
+<%!
+	public boolean validateLogin() {
+		return false;		
+	}
+%>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -68,8 +74,8 @@
 			<div class="fill">
 				<div class="container">
 					<a class="brand" href="#">Trabajo Pr&aacute;ctico</a>
-					<form action="main.html" class="pull-right">
-						<input class="input-small" type="text" name="usuario"
+					<form method="post" action="login" class="pull-right">
+						<input class="input-small" type="text" name="username"
 						placeholder="Usuario">
 						<input class="input-small"
 						type="password" name="password" placeholder="Contrase&ntilde;a">

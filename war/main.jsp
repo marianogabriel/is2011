@@ -1,10 +1,25 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" extends="ar.kennedy.is2011.controllers.AbstractController"%>
+<%@page import="ar.kennedy.is2011.db.entities.UserEy"%>
+<%@page import="ar.kennedy.is2011.session.SessionManager"%>
+<%@page import="ar.kennedy.is2011.utils.WebUtils"%>
+<%@page import="ar.kennedy.is2011.models.SearchModel"%>
+<%!
+	public boolean validateLogin() {
+		return true;		
+	}
+%>
+<%
+	SearchModel searchModel = new SearchModel();
+	UserEy user = (UserEy) SessionManager.get(request, WebUtils.getSessionIdentificator(request)).getElement("user");
+%>
 <!DOCTYPE html>
-<html lang="en">
+
+<%@page import="ar.kennedy.is2011.db.entities.PictureEy"%><html lang="en">
 	<head>
 		<meta charset="utf-8">
 		<title>Principal</title>
-		<meta name="GUI para aplicación is2011" content="">
-		<meta name="Grupo 4 - ¿nombre?" content="">
+		<meta name="GUI para aplicaciÃ³n is2011" content="">
+		<meta name="Grupo 4 - Â¿nombre?" content="">
 		<!--[if lt IE 9]>
 		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 		<![endif]-->
@@ -41,9 +56,12 @@
 						<li>
 							<a href="data.html">Datos</a>
 						</li>
+						<li>
+							<a href="imageUpload.jsp">Cargar imagen</a>
+						</li>
 					</ul>
 					<p class="pull-right">
-						Logueado como <a href="#">Usuario</a>
+						Logueado como <a href="#"><%= user.getUsername() %></a>
 					</p>
 				</div>
 			</div>
@@ -64,12 +82,16 @@
 					</ul>
 				</div>
 				<h2>&Uacute;ltimas fotos</h2>
+				<%
+					for(PictureEy picture : searchModel.getPicturesByUsername(user.getUsername())) {
+						
+				%>
 				<div class="well">
 					<ul class="media-grid">
 						<li>
 							<div class="row">
 								<div class="span3">
-									<a href="#"> <img class="thumbnail" src="http://placehold.it/90x90" alt=""> </a>
+									<a href="#"> <img class="thumbnail" src="image?id=<%= picture.getPictureId() %>" alt="" width="90" height="90"> </a>
 								</div>
 								<div class="span12">
 									<p>
@@ -92,6 +114,9 @@
 						</li>
 					</ul>
 				</div>
+				<%
+					}
+				%>
 				<div class="well">
 					<ul class="media-grid">
 						<li>
@@ -110,11 +135,11 @@
 									<div id="modal-edit" class="modal hide fade">
 										<div class="modal-header">
 											<a href="#" class="close">&times;</a>
-											<h3>Edición</h3>
+											<h3>EdiciÃ³n</h3>
 										</div>
 										<div class="modal-body">
 											<p>
-												¿Campos para modificar?
+												Â¿Campos para modificar?
 											</p>
 										</div>
 										<div class="modal-footer">

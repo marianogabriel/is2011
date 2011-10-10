@@ -1,0 +1,17 @@
+###############################################################################
+# JSAlbum de {El Codigo}                                                      #
+# Album de imagenes dinamico realizado con JavaScript                         #
+# Version:          JSAlbum 2.0                                               #
+# Publicado:        20 de junio de 2006                                       #
+# Distribuido por:  http://www.elcodigo.com                                   #
+###############################################################################
+# Copyright (c) 2006 Ivan Nieto Perez                                         #
+# Sujeto a los términos de licencia descritos en el documento licencia.txt    #
+###############################################################################
+
+
+JSAlbum
+Album de fotos con indice y visor de imágenes
+
+Guia de uso:
+http://www.elcodigo.com/superscripts/jsalbum/jsalbum.html

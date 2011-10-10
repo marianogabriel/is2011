@@ -34,7 +34,7 @@ public class ImageProxyModel extends AbstractModel {
 			response.getOutputStream().write(picture.getContent().getBytes());
 		
 		} else {
-			response.sendRedirect(picture.getLink());
+			response.sendRedirect(picture.getUrl());
 		}
 	}
 	

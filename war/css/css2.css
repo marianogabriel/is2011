@@ -1,0 +1,104 @@
+@charset "utf-8";
+/* CSS Document */
+/*
+body,td,th {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 0.95em;
+}
+body_Login {
+	background-color: #77ACB4;
+	background-image: url(../imagenes/fondo.jpg);
+	background-repeat: repeat-x;
+	margin-left: 4px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+}
+
+*/
+
+
+.my_body {
+	background-color: #ECEFFA;
+	font-family: "Trebuchet MS"; }
+	background-repeat: repeat-x;
+	margin-left: 4px;
+	margin-top: 1px;
+	margin-right: 1px;
+	margin-bottom: 1px;
+}
+
+.form_btn {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 1em;
+	font-weight: bold;
+	color: #FFF;
+	background-image: url(../imagenes/fondo_btn.gif);
+	background-repeat: repeat-x;
+	border: 1px solid #003;
+	background-color: #FF0000;
+	padding: 2px;
+}
+
+
+.form_01 {
+	background-color: #FFF;
+	background-image: url(../imagenes/fondo_form.gif);
+	background-repeat: repeat-x;
+	border: 1px solid #666;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 1.3em;
+	font-weight: bold;
+	color: #000;
+	padding-left: 3px;
+	margin: 0px;
+}
+.form_02 {
+	background-color: #FFF;
+	background-image: url(../imagenes/fondo_form2.gif);
+	background-repeat: repeat-x;
+	border: 1px solid #666;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 1em;
+	font-weight: normal;
+	color: #000;
+	padding-left: 3px;
+	margin: 0px;
+}
+
+.borde_2 {
+	background-color: #FFF;
+	border: 1px solid #000;
+	left: 2px;
+	top: 2px;
+	right: 2px;
+	bottom: 2px;
+	padding: 3px;
+}
+
+.divMensaje {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 1.95em;
+	font-weight: normal;
+	color: #333;
+	height:35px; 
+	width:300px;
+	background-color:#ffcdcd;
+	text-align: center; 
+	display:none;
+}
+
+
+
+/* Personalizo el aspecto del menú */
+	
+	#menu { width: 150px; padding: 0; border-bottom: solid #5cc4ff 1px; }
+	#menu div { border-top: solid #5cc4ff 1px; background: #c2e9ff; }
+	#menu a { padding-left: 10px; text-decoration: none; color: #00598c; font-weight: 700; display: block; width: 140px; font-size: 1em; }
+	#menu a:hover { background: #d1eeff; }
+	#menu ul { margin: 0; padding: 0; font-size: 0.9em; background: #f0faff; overflow: hidden; height: 0; }
+	#menu li { list-style: none; font-size: 0.8em; padding: 0; }
+	#menu li a { padding-left: 25px; width: 125px; }
+	#menu li a:hover { color: #0086d2; background: #daf3ff; }
+
+

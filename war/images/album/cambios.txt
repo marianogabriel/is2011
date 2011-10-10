@@ -1,0 +1,27 @@
+Version 1.1
+
+- Mas opciones de configuración para definicion del aspecto visual del album.
+
+- Eliminada referencia a config.js (no existe el fichero).
+
+- Nueva variable de configuracion para cada album: multiplicador. Permite 
+definir el tamaño de todas las imagenes del visor para ese album como el tamaño 
+de las miniaturas por un multiplicador. Es adecuado cuando todas las imagenes 
+son del mismo tamaño.
+
+Version 2.0
+
+- Nueva arquitectura, basada en CSS + capa de contenido dinámico. Ventaja: 
+permite funcionalidades avanzadas (deteccion de imagenes), y evita tener que 
+recargar la página cada ver que se muestra una imagen.
+
+- Deteccion de imagenes inexistentes en secuencia de imagenes de la galería. La 
+secuencia de imagenes es precargada para averiguar las imagenes que realmente 
+existen en el directorio. Las que no existen no se muestran.
+
+- Autogiro de imágenes verticales, para mostrarlas correctamente (sólo IE 5.5+): 
+se puede indicar que imagenes deben ser giradas cuando se muestren en el visor.
+
+- Mas opciones de configuración para definicion del aspecto visual del album 
+(bordes).
+

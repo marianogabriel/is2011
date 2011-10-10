@@ -27,11 +27,11 @@ public class UserEy implements Serializable {
 	@Column(name="STATUS")
 	private String status;
 		
-	@Column(name="CREATE_DATE")
-	private Date createDate;
+	@Column(name="DATE_CREATED")
+	private Date dateCreated;
 	
-	@Column(name="LAST_UPDATED")
-	private Date lastUpdated;
+	@Column(name="DATE_UPDATED")
+	private Date dateUpdated;
 	
 	public UserEy() {
 		super();
@@ -61,20 +61,20 @@ public class UserEy implements Serializable {
 		this.status = status;
 	}
 
-	public Date getCreateDate() {
-		return createDate;
+	public Date getDateCreated() {
+		return dateCreated;
 	}
 
-	public void setCreateDate(Date createDate) {
-		this.createDate = createDate;
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = dateCreated;
 	}
 
-	public Date getLastUpdated() {
-		return lastUpdated;
+	public Date getDateUpdated() {
+		return dateUpdated;
 	}
 
-	public void setLastUpdated(Date lastUpdated) {
-		this.lastUpdated = lastUpdated;
+	public void setDateUpdated(Date dateUpdated) {
+		this.dateUpdated = dateUpdated;
 	}
 
 }

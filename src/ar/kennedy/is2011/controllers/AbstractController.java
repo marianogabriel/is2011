@@ -11,6 +11,8 @@ import javax.servlet.jsp.HttpJspPage;
 import org.apache.log4j.Logger;
 
 import ar.kennedy.is2011.session.Session;
+import ar.kennedy.is2011.session.SessionManager;
+import ar.kennedy.is2011.utils.WebUtils;
 
 /**
  * @author mlabarinas
@@ -34,6 +36,7 @@ public abstract class AbstractController extends HttpServlet implements Controll
 		
 		try {
 			setHttpHeaders(response);
+			session = getSession(request, response);
 			
 			if(validateLogin()) {
 				if(validateUserLogin(request, response, session)) {
@@ -69,8 +72,22 @@ public abstract class AbstractController extends HttpServlet implements Controll
 	public abstract boolean validateLogin();
 	
 	protected Boolean validateUserLogin(HttpServletRequest request, HttpServletResponse response, Session session) {
-		/** TODO: implement method  */
-		return true;
+		return WebUtils.validateUserLogin(request, response, session);
+	}
+	
+	protected Session getSession(HttpServletRequest request, HttpServletResponse response) {
+		Session session = null;
+		String sessionIdentificator = getSessionIdentificator(request);
+		
+		if(sessionIdentificator != null) {
+			session = SessionManager.get(request, sessionIdentificator);
+		}
+		
+		return session;
+	}
+	
+	protected String getSessionIdentificator(HttpServletRequest request) {
+		return WebUtils.getSessionIdentificator(request);
 	}
 	
 	protected Boolean isJspPage() {
