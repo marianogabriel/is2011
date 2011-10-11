@@ -6,7 +6,7 @@
 <title>Cargar imagen</title>
 </head>
 <body>
-<form method="post" action="upload" enctype="multipart/form-data">
+<form method="post" action="/upload" enctype="multipart/form-data">
 	<h4>Sube tu imagen</h4>
 	<table>
 		<tr>

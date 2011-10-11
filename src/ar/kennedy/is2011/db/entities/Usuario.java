@@ -1,4 +1,4 @@
-package ar.kennedy.appEngine.beans;
+package ar.kennedy.is2011.db.entities;
 
 import java.io.Serializable;
 
@@ -50,8 +50,14 @@ public class Usuario implements Serializable{
 	@Column(name = "RESPUESTA_PREGUNTA")
 	private String respuestaPregunta;
 	
+	public Usuario() {
+		super();
+	}
+	
 	public Usuario(String nomUsr,String clave,String mail,String pSecreta,String respuesta){
-	   	this.nombreUsr = nomUsr;
+	   	this();
+		
+		this.nombreUsr = nomUsr;
 	   	this.clave = clave;
 	   	this.mail = mail;
 	   	this.idPreguntaSecreta = pSecreta;

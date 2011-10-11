@@ -5,7 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import ar.kennedy.is2011.db.dao.AbstractDao;
-import ar.kennedy.is2011.db.entities.UserEy;
+import ar.kennedy.is2011.db.entities.Usuario;
 import ar.kennedy.is2011.exception.UserNotExistException;
 import ar.kennedy.is2011.exception.ValidateMandatoryParameterException;
 import ar.kennedy.is2011.session.Session;
@@ -18,7 +18,7 @@ import ar.kennedy.is2011.utils.WebUtils;
  */
 public class LoginModel extends AbstractModel {
 
-	AbstractDao<UserEy> userDao = new AbstractDao<UserEy>();
+	AbstractDao<Usuario> userDao = new AbstractDao<Usuario>();
 	
 	public LoginModel() {
 		super();
@@ -40,15 +40,15 @@ public class LoginModel extends AbstractModel {
 	}
 
 	public Boolean validateLogin(HttpServletRequest request, HttpServletResponse response, String userId, String password) throws Exception {
-		Session session = null;
+		Session userSession = null;
 		
 		try {
-			UserEy userEy = userDao.findById(UserEy.class, userId);
+			Usuario userEy = userDao.findById(Usuario.class, userId);
 			
 			if(validate(userEy, password)) {
-				session = createLoginSession(request, response);
-				session.setElement("user", userEy);
-				SessionManager.save(request, session);
+				userSession = createLoginSession(request, response);
+				userSession.setElement("user", userEy);
+				SessionManager.save(request, userSession);
 
 				return true;
 				
@@ -67,9 +67,9 @@ public class LoginModel extends AbstractModel {
 		}
 	}
 	
-	private Boolean validate(UserEy userEy, String password) throws Exception {
+	private Boolean validate(Usuario userEy, String password) throws Exception {
 		if(userEy != null) {
-			return WebUtils.decrypt(userEy.getPassword()).equals(password);
+			return WebUtils.decrypt(userEy.getClave()).equals(password);
 			
 		} else {
 			throw new UserNotExistException("User not exist");
@@ -77,17 +77,17 @@ public class LoginModel extends AbstractModel {
 	}
 	
 	protected Session createLoginSession(HttpServletRequest request, HttpServletResponse response) {
-		Session session = null;
+		Session userSession = null;
 		String sessionIdentificator = WebUtils.createSessionIdentificator();
 		String sessionValidate = Aleatory.getAleatoryString(10);
 		
 		WebUtils.setCookie(response, new Cookie("sessionIdentificator", WebUtils.encrypt(sessionIdentificator)));
 		WebUtils.setCookie(response, new Cookie("sessionValidate", WebUtils.encrypt(sessionValidate)));
 		
-		session = SessionManager.create(request, sessionIdentificator);
-		session.setElement("sessionValidate", sessionValidate);
+		userSession = SessionManager.create(request, sessionIdentificator);
+		userSession.setElement("sessionValidate", sessionValidate);
 		
-		return session;
+		return userSession;
 	}
 	
 }

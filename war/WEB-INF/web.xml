@@ -58,23 +58,23 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 
 	<servlet>
 		<servlet-name>Forward</servlet-name>
-		<servlet-class>ar.kennedy.appEngine.controllers.ForwardServlet</servlet-class>
+		<servlet-class>ar.kennedy.is2011.controllers.ForwardServlet</servlet-class>
 	</servlet>
 	<servlet>
 		<servlet-name>Logout</servlet-name>
-		<servlet-class>ar.kennedy.appEngine.controllers.LogoutUsuarioServlet</servlet-class>
+		<servlet-class>ar.kennedy.is2011.controllers.LogoutUsuarioServlet</servlet-class>
 	</servlet>
 	<servlet>
 		<servlet-name>Login</servlet-name>
-		<servlet-class>ar.kennedy.appEngine.controllers.LoginUsuarioServlet</servlet-class>
+		<servlet-class>ar.kennedy.is2011.controllers.LoginUsuarioServlet</servlet-class>
 	</servlet>
 	<servlet>
 		<servlet-name>Registracion</servlet-name>
-		<servlet-class>ar.kennedy.appEngine.controllers.RegistracionUsuarioServlet</servlet-class>
+		<servlet-class>ar.kennedy.is2011.controllers.RegistracionUsuarioServlet</servlet-class>
 	</servlet>
 	<servlet>
 		<servlet-name>EditarCuenta</servlet-name>
-		<servlet-class>ar.kennedy.appEngine.controllers.EditarCuentaUsuarioServlet</servlet-class>
+		<servlet-class>ar.kennedy.is2011.controllers.EditarCuentaUsuarioServlet</servlet-class>
 	</servlet>
 	
 	<servlet-mapping>
@@ -99,13 +99,12 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 	</servlet-mapping>
 	
 	<filter>
-        <filter-name>SessionFilter</filter-name>
-        <filter-class>ar.kennedy.is2011.theClouds.manager.SessionFilter</filter-class>
+        <filter-name>SecureFilter</filter-name>
+        <filter-class>ar.kennedy.is2011.controller.filter.SecureFilter</filter-class>
     </filter>
-    
     <filter-mapping>
-        <filter-name>SessionFilter</filter-name>
-        <url-pattern>/jsp/*</url-pattern>  		  		  		
+        <filter-name>SecureFilter</filter-name>
+        <url-pattern>/secure/*</url-pattern>  		  		  		
     </filter-mapping>
 
 	<!-- END REST Mappings -->

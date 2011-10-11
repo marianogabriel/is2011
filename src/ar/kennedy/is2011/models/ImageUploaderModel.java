@@ -11,7 +11,7 @@ import org.apache.commons.lang.StringUtils;
 import ar.kennedy.is2011.constants.Constants;
 import ar.kennedy.is2011.db.dao.AbstractDao;
 import ar.kennedy.is2011.db.entities.PictureEy;
-import ar.kennedy.is2011.db.entities.UserEy;
+import ar.kennedy.is2011.db.entities.Usuario;
 import ar.kennedy.is2011.exception.ValidateMandatoryParameterException;
 import ar.kennedy.is2011.picture.MultiPartRequest;
 import ar.kennedy.is2011.picture.UploadedFile;
@@ -28,14 +28,14 @@ import com.google.appengine.api.datastore.Blob;
 public class ImageUploaderModel extends AbstractModel {
 
 	private HttpServletRequest request;
-	private Session session;
+	private Session userSession;
 	private AbstractDao<PictureEy> pictureDao;
 	
-	public ImageUploaderModel(HttpServletRequest request, Session session) {
+	public ImageUploaderModel(HttpServletRequest request, Session userSession) {
 		super();
 		
 		this.request = request;
-		this.session =  session;
+		this.userSession =  userSession;
 		this.pictureDao = new AbstractDao<PictureEy>();
 	}
 	
@@ -86,25 +86,25 @@ public class ImageUploaderModel extends AbstractModel {
 			errors.put("form_errors", formErrors);
 			
 			if(!formErrors.containsKey("mandatory_parameters")) {
-				session.setElement("picture", picture);
+				userSession.setElement("picture", picture);
 			}
 			
-			session.setElement("errors", errors);
-			SessionManager.save(request, session);
+			userSession.setElement("errors", errors);
+			SessionManager.save(request, userSession);
 			
 			return false;
 		}
 		
-		session.setElement("picture", picture);
-		SessionManager.save(request, session);
+		userSession.setElement("picture", picture);
+		SessionManager.save(request, userSession);
 		
 		return true;
 	}
 	
 	public void save() throws Exception {
-		PictureEy picture = (PictureEy) session.getElement("picture");
+		PictureEy picture = (PictureEy) userSession.getElement("picture");
 		picture.setPictureId(Aleatory.getAleatoryString(15));
-		picture.setUsername(((UserEy) session.getElement("user")).getUsername());
+		picture.setUsername(((Usuario) userSession.getElement("user")).getNombreUsr());
 		picture.setDateCreated(new Date());
 		picture.setDateUpdated(picture.getDateCreated());
 		

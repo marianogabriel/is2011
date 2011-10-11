@@ -32,16 +32,16 @@ public abstract class AbstractController extends HttpServlet implements Controll
 	}
 	
 	protected void internalAction(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Session session = null;
+		Session userSession = null;
 		
 		try {
 			setHttpHeaders(response);
-			session = getSession(request, response);
+			userSession = getSession(request, response);
 			
 			if(validateLogin()) {
-				if(validateUserLogin(request, response, session)) {
+				if(validateUserLogin(request, response, userSession)) {
 					if(!isJspPage()) {
-						action(request, response, session);
+						action(request, response, userSession);
 					
 					} else {
 						_jspService(request, response);
@@ -53,7 +53,7 @@ public abstract class AbstractController extends HttpServlet implements Controll
 			
 			} else {
 				if(!isJspPage()) {
-					action(request, response, session);
+					action(request, response, userSession);
 				
 				} else {
 					_jspService(request, response);
@@ -62,32 +62,29 @@ public abstract class AbstractController extends HttpServlet implements Controll
 			
 		} catch(Exception e) {
 			log.error("Unexpected error", e);
+			request.getSession(true).setAttribute("exception", e);
 			
-			try {
-				response.getWriter().print(WebUtils.getStackStrace(e)); //response.sendRedirect("error.jsp");
-			
-			} catch(Exception ex) {}
+			response.sendRedirect("error.jsp");
 		}
-		
 	}
 	
-	public void action(HttpServletRequest request, HttpServletResponse response, Session session) throws Exception { }
+	public void action(HttpServletRequest request, HttpServletResponse response, Session userSession) throws Exception { }
 	
 	public abstract boolean validateLogin();
 	
-	protected Boolean validateUserLogin(HttpServletRequest request, HttpServletResponse response, Session session) {
-		return WebUtils.validateUserLogin(request, response, session);
+	protected Boolean validateUserLogin(HttpServletRequest request, HttpServletResponse response, Session userSession) {
+		return WebUtils.validateUserLogin(request, response, userSession);
 	}
 	
 	protected Session getSession(HttpServletRequest request, HttpServletResponse response) {
-		Session session = null;
+		Session userSession = null;
 		String sessionIdentificator = getSessionIdentificator(request);
 		
 		if(sessionIdentificator != null) {
-			session = SessionManager.get(request, sessionIdentificator);
+			userSession = SessionManager.get(request, sessionIdentificator);
 		}
 		
-		return session;
+		return userSession;
 	}
 	
 	protected String getSessionIdentificator(HttpServletRequest request) {

@@ -15,19 +15,19 @@ public class ImageUploaderController extends AbstractController {
 	
 	private static final long serialVersionUID = 8956304553458377284L;
 	
-	public void action(HttpServletRequest request, HttpServletResponse response, Session session) throws Exception {
-		ModelItf model = new ImageUploaderModel(request, session);
+	public void action(HttpServletRequest request, HttpServletResponse response, Session userSession) throws Exception {
+		ModelItf model = new ImageUploaderModel(request, userSession);
 		
 		if(((ImageUploaderModel) model).validate()) {
 			((ImageUploaderModel) model).save();
 			
-			session.removeElement("picture");
-			SessionManager.save(request, session);
+			userSession.removeElement("picture");
+			SessionManager.save(request, userSession);
 			
-			response.sendRedirect("main.jsp");
+			response.sendRedirect("secure/main.jsp");
 		
 		} else {
-			response.sendRedirect("imageUpload.jsp");
+			response.sendRedirect("secure/imageUpload.jsp");
 		}
 	}
 	

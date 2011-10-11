@@ -1,4 +1,4 @@
-package ar.kennedy.appEngine.controllers;
+package ar.kennedy.is2011.controllers;
 
 import java.io.IOException;
 
@@ -8,20 +8,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import ar.kennedy.appEngine.beans.Usuario;
-import ar.kennedy.appEngine.dao.login.ValidarUsuarioClaveDAO;
-import ar.kennedy.appEngine.dao.login.ValidarUsuarioClaveDAOImpl;
+import ar.kennedy.is2011.db.entities.Usuario;
 
 /**
  * Servlet implementation class LoginUsuarioController
  */
-public class LogoutUsuarioServlet extends HttpServlet {
+public class ForwardServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public LogoutUsuarioServlet() {
+    public ForwardServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -29,12 +27,24 @@ public class LogoutUsuarioServlet extends HttpServlet {
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		System.out.println("entro en doPost logout!!!");
-		
+		System.out.println("entro en Forward!!!");
+		  String pagina = request.getParameter("misFotos");   
+		   
 		  HttpSession session = request.getSession();	
+		  Usuario usr = (Usuario)session.getAttribute("usuarioLogeado");
+		  
+		  if(usr != null){
+			if(pagina.equals("misFotos")){
+			  request.getRequestDispatcher("secure/panelPrincipal.jsp").forward(request, response);
+			}
+			  
+			  
+			  
+		  }else{
 		  session.invalidate();
-		  request.getRequestDispatcher("jsp/loginUsuario.jsp").forward(request, response);
-				
+		  request.setAttribute("iniciarSesion","Debe iniciar sesion nuevamente");
+		  request.getRequestDispatcher("loginUsuario.jsp").forward(request, response);
+		  }		
 		
 				
 	}

@@ -1,13 +1,6 @@
-package ar.kennedy.appEngine.dao.login;
+package ar.kennedy.is2011.db.dao;
 
-import java.util.Iterator;
-import java.util.List;
-
-import javax.jdo.PersistenceManager;
-import javax.jdo.Query;
-
-import ar.kennedy.appEngine.beans.Usuario;
-import ar.kennedy.is2011.db.dao.AbstractDao;
+import ar.kennedy.is2011.db.entities.Usuario;
 
 public class ValidarUsuarioClaveDAOImpl implements ValidarUsuarioClaveDAO {
 

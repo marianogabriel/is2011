@@ -1,15 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@page import="ar.kennedy.is2011.db.entities.UserEy"%>
+<%@page import="ar.kennedy.is2011.db.entities.Usuario"%>
 <%@page import="ar.kennedy.is2011.session.SessionManager"%>
 <%@page import="ar.kennedy.is2011.utils.WebUtils"%>
 <%@page import="ar.kennedy.is2011.models.SearchModel"%>
+<%@page import="ar.kennedy.is2011.db.entities.PictureEy"%>
 <%
 	SearchModel searchModel = new SearchModel();
-	UserEy user = (UserEy) SessionManager.get(request, WebUtils.getSessionIdentificator(request)).getElement("user");
+	Usuario user = (Usuario) SessionManager.get(request, WebUtils.getSessionIdentificator(request)).getElement("user");
 %>
 <!DOCTYPE html>
-
-<%@page import="ar.kennedy.is2011.db.entities.PictureEy"%><html lang="en">
+<html lang="en">
 	<head>
 		<meta charset="utf-8">
 		<title>Principal</title>
@@ -21,9 +21,9 @@
 		<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
 		<script src="assets/js/google-code-prettify/prettify.js"></script>
-		<script src="js/bootstrap-modal.js"></script>
-		<link href="css/bootstrap.css" rel="stylesheet">
-		<link href="css/docs.css" rel="stylesheet">
+		<script src="/js/bootstrap-modal.js"></script>
+		<link href="/css/bootstrap.css" rel="stylesheet">
+		<link href="/css/docs.css" rel="stylesheet">
 		<style type="text/css">
 			body {
 				padding-top: 60px;
@@ -49,14 +49,14 @@
 							<a href="#buscar">Buscar</a>
 						</li>
 						<li>
-							<a href="data.html">Datos</a>
+							<a href="/data.html">Datos</a>
 						</li>
 						<li>
-							<a href="imageUpload.jsp">Cargar imagen</a>
+							<a href="/secure/imageUpload.jsp">Cargar imagen</a>
 						</li>
 					</ul>
 					<p class="pull-right">
-						Logueado como <a href="#"><%= user.getUsername() %></a>
+						Logueado como <a href="#"><%= user.getNombreUsr() %></a>
 					</p>
 				</div>
 			</div>
@@ -78,7 +78,7 @@
 				</div>
 				<h2>&Uacute;ltimas fotos</h2>
 				<%
-					for(PictureEy picture : searchModel.getPicturesByUsername(user.getUsername())) {
+					for(PictureEy picture : searchModel.getPicturesByUsername(user.getNombreUsr())) {
 						
 				%>
 				<div class="well">
@@ -86,7 +86,7 @@
 						<li>
 							<div class="row">
 								<div class="span3">
-									<a href="#"> <img class="thumbnail" src="image?id=<%= picture.getPictureId() %>" alt="" width="90" height="90"> </a>
+									<a href="#"> <img class="thumbnail" src="/image?id=<%= picture.getPictureId() %>" alt="" width="90" height="90"> </a>
 								</div>
 								<div class="span12">
 									<p>
@@ -101,7 +101,7 @@
 									<button class="btn primary">
 										Editar
 									</button>
-									<a href="data.html" class="btn primary">
+									<a href="/data.html" class="btn primary">
 										Editar
 									</a>
 								</div>

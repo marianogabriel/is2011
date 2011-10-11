@@ -14,7 +14,7 @@ public class LogoutController extends AbstractController {
 
 	private static final long serialVersionUID = 6173267829791229429L;
 
-	public void action(HttpServletRequest request, HttpServletResponse response, Session session) throws Exception {
+	public void action(HttpServletRequest request, HttpServletResponse response, Session userSession) throws Exception {
 		ModelItf model = new LogoutModel();
 		
 		((LogoutModel) model).logout(request, response);

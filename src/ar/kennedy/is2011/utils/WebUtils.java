@@ -92,11 +92,11 @@ public class WebUtils {
 		}
 	}
 	
-	public static Boolean validateUserLogin(HttpServletRequest request, HttpServletResponse response, Session session) {
+	public static Boolean validateUserLogin(HttpServletRequest request, HttpServletResponse response, Session userSession) {
 		String sessionValidate = getSessionValidate(request);
 		
-		if(StringUtils.isNotBlank(sessionValidate) && session != null) {
-			if(sessionValidate.equals((String) session.getElement("sessionValidate"))) {
+		if(StringUtils.isNotBlank(sessionValidate) && userSession != null) {
+			if(sessionValidate.equals((String) userSession.getElement("sessionValidate"))) {
 				return true;
 			} else {
 				return false;

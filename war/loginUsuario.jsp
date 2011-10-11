@@ -24,11 +24,11 @@
 		        <tr><td></td><td><b>${loginFailure}</b></td></tr>
 		      	<tr height="60px">
 		      		<td align="right">Nombre de usuario:&nbsp;</td>
-		      		<td><input type="text" name="nombreUsr" maxlength="25" size="40" id="nombre"></td>
+		      		<td><input type="text" name="username" maxlength="25" size="40" id="username"></td>
 		       	</tr>
 		       	<tr>
 		      		<td align="right">Contraseña:&nbsp;</td>
-		      		<td><input type="password" name="claveUsr" maxlength="25" size="40" id="clave"></td>
+		      		<td><input type="password" name="password" maxlength="25" size="40" id="password"></td>
 		       	</tr>
 		        <tr>
 		            <td align="right" colspan="2">
@@ -39,13 +39,13 @@
 		      </table>
    		</td>
    	  </tr>	
-   	  <tr><td align="right"><a href="jsp/registracionRapida.jsp" >Nuevo Usuario?</a></td></tr> 
-   	  <tr><td align="right"><a href="jsp/restablecerClave.jsp" >Olvidó su contraseña?</a></td></tr> 	
+   	  <tr><td align="right"><a href="registracionRapida.jsp" >Nuevo Usuario?</a></td></tr> 
+   	  <tr><td align="right"><a href="restablecerClave.jsp" >Olvidó su contraseña?</a></td></tr> 	
    	  
     </table>
    
     <div style="position:absolute;top:70%;left:10%;">
-     <img alt="" src="/imagenes/publicidad.JPG">
+     <img alt="" src="/images/publicidad.JPG">
     </div> 
 
 	</form>
@@ -54,8 +54,8 @@
 <script type="text/javascript">
 
 var form = document.getElementsByName("form")[0];
-var nom = document.getElementById("nombre");
-var pass = document.getElementById("clave");
+var nom = document.getElementById("username");
+var pass = document.getElementById("password");
 
 
   function loginUsuario(){

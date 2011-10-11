@@ -1,6 +1,6 @@
-package ar.kennedy.appEngine.dao.registracion;
+package ar.kennedy.is2011.db.dao;
 
-import ar.kennedy.appEngine.beans.Usuario;
+import ar.kennedy.is2011.db.entities.Usuario;
 
 public interface AdministrarRegistracionUsuarioDAO {
 	

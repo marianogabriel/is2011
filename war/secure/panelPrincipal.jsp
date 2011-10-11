@@ -1,11 +1,13 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1" %>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" %>
+<%
+	Usuario user = (Usuario) SessionManager.get(request, WebUtils.getSessionIdentificator(request)).getElement("user");
+	session.setAttribute("usuarioLogeado", user);
+%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
- 
-<html>
- 
-
+<%@page import="ar.kennedy.is2011.db.entities.Usuario"%>
+<%@page import="ar.kennedy.is2011.session.SessionManager"%>
+<%@page import="ar.kennedy.is2011.utils.WebUtils"%><html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <script type="text/javascript" src="/js/menu.js"></script>
@@ -40,7 +42,7 @@ function salir(){
 }
 
 function editar(){
-	form.action = "jsp/editarCuentaUsuario.jsp";
+	form.action = "/secure/editarCuentaUsuario.jsp";
 	form.submit();
 }
 

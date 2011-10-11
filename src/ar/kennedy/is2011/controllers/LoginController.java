@@ -14,11 +14,11 @@ public class LoginController extends AbstractController {
 
 	private static final long serialVersionUID = 7995740723219513508L;
 
-	public void action(HttpServletRequest request, HttpServletResponse response, Session session) throws Exception {
+	public void action(HttpServletRequest request, HttpServletResponse response, Session userSession) throws Exception {
 		ModelItf model = new LoginModel();
 		
 		if(((LoginModel) model).validateLogin(request, response)) {
-			response.sendRedirect("main.jsp");
+			response.sendRedirect("secure/main.jsp");
 		
 		} else {
 			response.sendRedirect("index.jsp?e=t");

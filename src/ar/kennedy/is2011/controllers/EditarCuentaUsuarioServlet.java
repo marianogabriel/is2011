@@ -1,4 +1,4 @@
-package ar.kennedy.appEngine.controllers;
+package ar.kennedy.is2011.controllers;
 
 import java.io.IOException;
 
@@ -8,11 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.google.apphosting.utils.remoteapi.RemoteApiPb.Request;
-
-import ar.kennedy.appEngine.beans.Usuario;
-import ar.kennedy.appEngine.dao.registracion.AdministrarRegistracionUsuarioDAO;
-import ar.kennedy.appEngine.dao.registracion.AdministrarRegistracionUsuarioDAOImpl;
+import ar.kennedy.is2011.db.dao.AdministrarRegistracionUsuarioDAO;
+import ar.kennedy.is2011.db.dao.AdministrarRegistracionUsuarioDAOImpl;
+import ar.kennedy.is2011.db.entities.Usuario;
 
 public class EditarCuentaUsuarioServlet extends HttpServlet{
 	private static final long serialVersionUID = 1L;
@@ -53,10 +51,10 @@ public class EditarCuentaUsuarioServlet extends HttpServlet{
 			
 		  AdministrarRegistracionUsuarioDAO serv = new AdministrarRegistracionUsuarioDAOImpl();  	
 		  serv.modificarUsuario(usuario);
-		  request.getRequestDispatcher("jsp/editarCuentaUsuario.jsp").forward(request, response);	
+		  request.getRequestDispatcher("secure/editarCuentaUsuario.jsp").forward(request, response);	
 		}
 		else{
-			request.getRequestDispatcher("errores/errorLogin.jspp").forward(request, response);  	
+			request.getRequestDispatcher("errorLogin.jsp").forward(request, response);  	
 		}
 			
 		

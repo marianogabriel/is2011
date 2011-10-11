@@ -14,7 +14,7 @@ public class ImageProxyController extends AbstractController {
 
 	private static final long serialVersionUID = -397532218428910357L;
 
-	public void action(HttpServletRequest request, HttpServletResponse response, Session session) throws Exception {
+	public void action(HttpServletRequest request, HttpServletResponse response, Session userSession) throws Exception {
 		ModelItf model = new ImageProxyModel(request, response);
 		
 		((ImageProxyModel) model).getImage();
