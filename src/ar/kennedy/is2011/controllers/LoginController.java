@@ -18,10 +18,10 @@ public class LoginController extends AbstractController {
 		ModelItf model = new LoginModel();
 		
 		if(((LoginModel) model).validateLogin(request, response)) {
-			response.sendRedirect("secure/main.jsp");
+			response.sendRedirect("/secure/main.jsp");
 		
 		} else {
-			response.sendRedirect("index.jsp?e=t");
+			response.sendRedirect("/index.jsp?e=t");
 		}
 	}
 	

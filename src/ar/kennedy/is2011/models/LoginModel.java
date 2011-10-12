@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import ar.kennedy.is2011.db.dao.AbstractDao;
 import ar.kennedy.is2011.db.entities.Usuario;
+import ar.kennedy.is2011.db.exception.EntityNotFoundException;
 import ar.kennedy.is2011.exception.UserNotExistException;
 import ar.kennedy.is2011.exception.ValidateMandatoryParameterException;
 import ar.kennedy.is2011.session.Session;
@@ -57,7 +58,7 @@ public class LoginModel extends AbstractModel {
 				return false;
 			}
 			
-		} catch(UserNotExistException e) {
+		} catch(EntityNotFoundException e) {
 			errors.put("login_fail", "El usuario no existe");
 			return false;
 		
