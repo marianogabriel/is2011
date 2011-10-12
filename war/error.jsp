@@ -7,6 +7,7 @@
 <title>Error</title>
 </head>
 <body>
+	<h4>Unexpected error</h4>
 	<!--  
 		<%= session.getAttribute("exception") != null ? WebUtils.getStackStrace((Exception) session.getAttribute("exception")) : "" %>
 	-->

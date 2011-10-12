@@ -10,6 +10,8 @@ import java.util.Vector;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.StringUtils;
+
 
 import com.oreilly.servlet.multipart.FilePart;
 import com.oreilly.servlet.multipart.MultipartParser;
@@ -57,7 +59,9 @@ public class MultiPartRequest {
 				buffer.close();
 				uploadedFile = new UploadedFile(filepart.getFileName(),filepart.getContentType(),stream);
 				
-				files.put(uploadedFile.getFileName(), uploadedFile);
+				if(StringUtils.isNotBlank(uploadedFile.getFileName())) {
+					files.put(uploadedFile.getFileName(), uploadedFile);
+				}
 			}
 		}
 	}

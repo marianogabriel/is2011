@@ -163,6 +163,10 @@ public class WebUtils {
 		return StringUtils.replaceChars(value, Constants.NOT_ORDERER_STRING, Constants.ORDERER_STRING);
 	}
 	
+	public static String getCompleteUrlForPicture(HttpServletRequest request, String id) {
+		return (new StringBuilder()).append(request.getRequestURL().subSequence(0, request.getRequestURL().lastIndexOf("/"))).append("/image?id=").append(id).toString();
+	}
+	
     public static String getStackStrace(Throwable e) throws Exception {
     	ByteArrayOutputStream byteArrayOutputStream = null;
     	PrintStream printStream = null;
@@ -183,5 +187,5 @@ public class WebUtils {
     private static String stripXss(String input) {
     	return input.replace("&", "&amp;").replace("#", "&#35;").replace("<", "&lt;").replace(">", "&gt;").replace("(", "&#40;").replace(")", "&#41;");
     }
-	
+    
 }

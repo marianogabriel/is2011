@@ -2,10 +2,11 @@
 <%@page import="ar.kennedy.is2011.db.entities.Usuario"%>
 <%@page import="ar.kennedy.is2011.session.SessionManager"%>
 <%@page import="ar.kennedy.is2011.utils.WebUtils"%>
-<%@page import="ar.kennedy.is2011.models.SearchModel"%>
+<%@page import="ar.kennedy.is2011.models.SearchPicturesModel"%>
 <%@page import="ar.kennedy.is2011.db.entities.PictureEy"%>
+<%@page import="org.apache.commons.lang.StringUtils"%>
 <%
-	SearchModel searchModel = new SearchModel();
+	SearchPicturesModel searchPicturesModel = new SearchPicturesModel();
 	Usuario user = (Usuario) SessionManager.get(request, WebUtils.getSessionIdentificator(request)).getElement("user");
 %>
 <!DOCTYPE html>
@@ -56,7 +57,7 @@
 						</li>
 					</ul>
 					<p class="pull-right">
-						Logueado como <a href="#"><%= user.getNombreUsr() %></a>
+						Logueado como <a href="#"><%= user.getNombreUsr() %></a><a href="/logout"> Cerrar sesion</a>
 					</p>
 				</div>
 			</div>
@@ -68,17 +69,38 @@
 					<ul class="media-grid">
 						<li>
 							<div class="span4">
-								<a href="#"> <img class="thumbnail" src="http://placehold.it/150x150" alt=""> </a>
+								<%
+									PictureEy lastImageUpload = searchPicturesModel.getLastPictureUploadByUser(user.getNombreUsr());
+									
+									if(lastImageUpload != null) {
+								%>
+									<a href="/secure/pictureView.jsp?id=<%= lastImageUpload.getPictureId() %>"><img class="thumbnail" src="/image?id=<%= lastImageUpload.getPictureId() %>" width="150" height="150" alt=""></a>
+								<%
+									} else {
+								%>
+									<a href="#"> <img class="thumbnail" src="http://placehold.it/150x150" alt=""> </a>
+								<%
+									}
+								%>
 							</div>
 							<div class="span10">
-								<h1>Nombre Apellido</h1>
+								<h1>
+									<% 
+										if(StringUtils.isNotBlank(user.getNombre()) && StringUtils.isNotBlank(user.getApellido())) {
+											out.print((new StringBuilder()).append(user.getNombre()).append(" ").append(user.getApellido()).toString());
+										
+										} else {
+											out.print(user.getNombreUsr());
+										}
+									%>
+								</h1>
 							</div>
 						</li>
 					</ul>
 				</div>
 				<h2>&Uacute;ltimas fotos</h2>
 				<%
-					for(PictureEy picture : searchModel.getPicturesByUsername(user.getNombreUsr())) {
+					for(PictureEy picture : searchPicturesModel.getPicturesByUsername(user.getNombreUsr())) {
 						
 				%>
 				<div class="well">
@@ -86,24 +108,21 @@
 						<li>
 							<div class="row">
 								<div class="span3">
-									<a href="#"> <img class="thumbnail" src="/image?id=<%= picture.getPictureId() %>" alt="" width="90" height="90"> </a>
+									<a href="/secure/pictureView.jsp?id=<%= picture.getPictureId() %>"><img class="thumbnail" src="/image?id=<%= picture.getPictureId() %>" alt="" width="90" height="90"> </a>
 								</div>
+								<p>
+									Acciones
+								</p>
 								<div class="span12">
-									<p>
-										Metadata de la imagen
-									</p>
-									<button class="btn danger">
+									<a href="/secure/pictureView.jsp?id=<%= picture.getPictureId() %>"><button class="btn info">
+										Ver
+									</button></a>
+									<a href="/secure/imageUpload.jsp?id=<%= picture.getPictureId() %>"><button class="btn primary">
+										Editar
+									</button></a>
+									<a href="/upload?action=delete&id=<%= picture.getPictureId() %>"><button class="btn danger">
 										Eliminar
-									</button>
-									<button class="btn info">
-										Asignar
-									</button>
-									<button class="btn primary">
-										Editar
-									</button>
-									<a href="/data.html" class="btn primary">
-										Editar
-									</a>
+									</button></a>
 								</div>
 							</div>
 						</li>
@@ -112,45 +131,6 @@
 				<%
 					}
 				%>
-				<div class="well">
-					<ul class="media-grid">
-						<li>
-							<div class="row">
-								<div class="span3">
-									<a href="#"> <img class="thumbnail" src="http://placehold.it/90x90" alt=""> </a>
-								</div>
-								<div class="span12">
-									<p></p>
-									<button class="btn danger">
-										Eliminar
-									</button>
-									<button class="btn info">
-										Asignar
-									</button>
-									<div id="modal-edit" class="modal hide fade">
-										<div class="modal-header">
-											<a href="#" class="close">&times;</a>
-											<h3>EdiciÃ³n</h3>
-										</div>
-										<div class="modal-body">
-											<p>
-												Â¿Campos para modificar?
-											</p>
-										</div>
-										<div class="modal-footer">
-											<a href="#" class="btn primary">Aceptar</a>
-											<a href="#" class="btn secondary">Cancelar</a>
-										</div>
-									</div>
-									<button data-controls-modal="modal-edit"
-									data-backdrop="true" data-keyboard="true" class="btn primary">
-										Editar
-									</button>
-								</div>
-							</div>
-						</li>
-					</ul>
-				</div>
 				<div class="pagination">
 					<ul>
 						<li class="prev disabled">

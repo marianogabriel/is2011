@@ -14,7 +14,7 @@ public class ShareTwitter implements ShareItf {
 	}
 
 	private String getLInkTemplate() {
-		return "<a href=\"##URL##\" target=\"_BLANK\"><img src=\"images/share_twitter.jpeg\"></a>";
+		return "<a href=\"##URL##\" target=\"_BLANK\"><img src=\"/images/share_twitter.jpeg\"></a>";
 	}
 	
 }

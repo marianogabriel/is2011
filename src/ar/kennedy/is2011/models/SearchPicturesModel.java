@@ -1,5 +1,6 @@
 package ar.kennedy.is2011.models;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Vector;
@@ -11,13 +12,14 @@ import ar.kennedy.is2011.db.exception.EntityNotFoundException;
 /**
  * @author mlabarinas
  */
-public class SearchModel extends AbstractModel {
+public class SearchPicturesModel extends AbstractModel {
 
 	AbstractDao<PictureEy> pictureDao;
 	
 	private static final String PICTURE_BY_USER_QUERY = "SELECT e FROM PictureEy e WHERE e.username = :1";
+	private static final String LAST_PICTURE_UPLOAD_BY_USER_QUERY = "SELECT e FROM PictureEy e ORDER BY e.dateCreated DESC";
 	
-	public SearchModel() {
+	public SearchPicturesModel() {
 		super();
 		
 		this.pictureDao = new AbstractDao<PictureEy>();
@@ -32,7 +34,20 @@ public class SearchModel extends AbstractModel {
 			return pictures;
 			
 		} catch(EntityNotFoundException e) {
-			return pictures;
+			return new ArrayList<PictureEy>();
+		}
+	}
+	
+	public PictureEy getLastPictureUploadByUser(String username) {
+		List<PictureEy> pictures = null;
+		
+		try {
+			pictures = pictureDao.createCollectionQuery(LAST_PICTURE_UPLOAD_BY_USER_QUERY, null);
+		
+			return pictures.get(0);
+			
+		} catch(EntityNotFoundException e) {
+			return null;
 		}
 	}
 	

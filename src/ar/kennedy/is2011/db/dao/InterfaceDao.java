@@ -18,6 +18,5 @@ public interface InterfaceDao<T> {
 	public List<T> select(Class<T> clase) throws EntityNotFoundException;
 	public T createSingleQuery(String ejbQuery, Vector<Object> parameters) throws EntityNotFoundException;
 	public List<T> createCollectionQuery(String ejbQuery, Vector<Object> parameters) throws EntityNotFoundException;
-	public void close();
 	
 }

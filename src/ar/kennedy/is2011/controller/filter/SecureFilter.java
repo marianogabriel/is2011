@@ -27,7 +27,7 @@ public class SecureFilter implements Filter{
 			HttpServletResponse response = (HttpServletResponse) sResponse;
 			
 			if(!WebUtils.validateUserLogin(request, response, SessionManager.get(request, WebUtils.getSessionIdentificator(request)))){
-				response.sendRedirect("errorLogin.jsp");
+				response.sendRedirect("/index.jsp");
 				return;
 			}
 			

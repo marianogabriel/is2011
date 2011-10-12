@@ -48,7 +48,7 @@ public abstract class AbstractController extends HttpServlet implements Controll
 					}
 				
 				} else {
-					response.sendRedirect("index.jsp");
+					response.sendRedirect("/index.jsp");
 				}
 			
 			} else {
@@ -64,7 +64,7 @@ public abstract class AbstractController extends HttpServlet implements Controll
 			log.error("Unexpected error", e);
 			request.getSession(true).setAttribute("exception", e);
 			
-			response.sendRedirect("error.jsp");
+			response.sendRedirect("/error.jsp");
 		}
 	}
 	

@@ -14,7 +14,7 @@ public class ShareFacebook implements ShareItf {
 	}
 
 	private String getLInkTemplate() {
-		return "<a href=\"##URL##\" target=\"_BLANK\"><img src=\"images/share_facebook.jpeg\"></a>";
+		return "<a href=\"##URL##\" target=\"_BLANK\"><img src=\"/images/share_facebook.jpeg\"></a>";
 	}
 	
 }

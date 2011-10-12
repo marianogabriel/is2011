@@ -30,17 +30,19 @@ public class ImageUploaderModel extends AbstractModel {
 	private HttpServletRequest request;
 	private Session userSession;
 	private AbstractDao<PictureEy> pictureDao;
+	private String action;
 	
-	public ImageUploaderModel(HttpServletRequest request, Session userSession) {
+	public ImageUploaderModel(HttpServletRequest request, Session userSession, String action) {
 		super();
 		
 		this.request = request;
 		this.userSession =  userSession;
 		this.pictureDao = new AbstractDao<PictureEy>();
+		this.action = action;
 	}
 	
 	public Boolean validate() throws Exception {
-		PictureEy picture = new PictureEy();
+		PictureEy picture = "add".equals(action) ? new PictureEy() : pictureDao.findById(PictureEy.class, WebUtils.getParameter(request, "id"));
 		Map<String, Object> formErrors = new HashMap<String, Object>();
 		MultiPartRequest multiPartRequest = new MultiPartRequest(request, (Constants.FILE_UPLOAD_MAX_SIZE * 1024 * 1024));
 		
@@ -71,7 +73,10 @@ public class ImageUploaderModel extends AbstractModel {
 				picture.setUrl(url);
 			}
 			
-			picture.setContent(new Blob(((UploadedFile) multiPartRequest.getFiles().nextElement()).getContent().toByteArray()));
+			if(multiPartRequest.getFiles().hasMoreElements()) {
+				picture.setContent(new Blob(((UploadedFile) multiPartRequest.getFiles().nextElement()).getContent().toByteArray()));
+			}
+			
 			picture.setTags(WebUtils.getParameter(multiPartRequest, "tags"));
 			
 			if(picture.getContent() == null && StringUtils.isBlank(picture.getUrl())) {
@@ -109,6 +114,19 @@ public class ImageUploaderModel extends AbstractModel {
 		picture.setDateUpdated(picture.getDateCreated());
 		
 		pictureDao.persist(picture);
+	}
+	
+	public void update() throws Exception {
+		PictureEy picture = (PictureEy) userSession.getElement("picture");
+		picture.setDateUpdated(new Date());
+		
+		pictureDao.persist(picture);
+	}
+	
+	public void delete() throws Exception {
+		WebUtils.validateMandatoryParameters(request, new String[] {"id"});
+		
+		pictureDao.remove(PictureEy.class, WebUtils.getParameter(request, "id"));
 	}
 	
 	/*

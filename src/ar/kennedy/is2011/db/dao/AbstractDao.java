@@ -158,9 +158,4 @@ public class AbstractDao<T> implements InterfaceDao<T> {
 		}
 	}
 	
-	public void close() {
-		log.debug("Close connection");
-		em.close();
-	}
-	
 }
