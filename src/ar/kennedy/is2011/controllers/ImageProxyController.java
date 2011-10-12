@@ -15,13 +15,13 @@ public class ImageProxyController extends AbstractController {
 	private static final long serialVersionUID = -397532218428910357L;
 
 	public void action(HttpServletRequest request, HttpServletResponse response, Session userSession) throws Exception {
-		ModelItf model = new ImageProxyModel(request, response);
+		ModelItf model = new ImageProxyModel(request, response, userSession);
 		
-		((ImageProxyModel) model).getImage();
+		((ImageProxyModel) model).getPicture();
 	}
 
 	public boolean validateLogin() {
-		return false;
+		return true;
 	}
 	
 	protected void setHttpHeaders(HttpServletResponse response) {
