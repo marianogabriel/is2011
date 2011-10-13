@@ -35,7 +35,7 @@ public class ImageUploaderController extends AbstractController {
 				response.sendRedirect("secure/main.jsp");
 			
 			} else {
-				response.sendRedirect("secure/imageUpload.jsp?e=t");
+				request.getRequestDispatcher("secure/imageUpload.jsp?e=t").forward(request, response);
 			}
 		
 		} else if("update".equals(action)) {
@@ -48,7 +48,7 @@ public class ImageUploaderController extends AbstractController {
 				response.sendRedirect("secure/main.jsp");
 			
 			} else {
-				response.sendRedirect("secure/imageUpload.jsp?e=t");
+				request.getRequestDispatcher("secure/imageUpload.jsp?e=t").forward(request, response);
 			}
 		
 		} else if("delete".equals(action)) {
@@ -59,6 +59,7 @@ public class ImageUploaderController extends AbstractController {
 		} else {
 			throw new Exception("Undefined action");
 		}
+		
 	}
 	
 	public boolean validateLogin() {

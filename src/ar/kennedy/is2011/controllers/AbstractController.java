@@ -64,7 +64,7 @@ public abstract class AbstractController extends HttpServlet implements Controll
 			log.error("Unexpected error", e);
 			request.getSession(true).setAttribute("exception", e);
 			
-			response.sendRedirect("/error.jsp");
+			request.getRequestDispatcher("/error.jsp").forward(request, response);
 		}
 	}
 	

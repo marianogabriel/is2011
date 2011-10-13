@@ -21,7 +21,7 @@ public class LoginController extends AbstractController {
 			response.sendRedirect("/secure/main.jsp");
 		
 		} else {
-			response.sendRedirect("/index.jsp?e=t");
+			request.getRequestDispatcher("/index.jsp?e=t").forward(request, response);
 		}
 	}
 	
