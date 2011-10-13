@@ -21,6 +21,10 @@ import ar.kennedy.is2011.utils.Aleatory;
 import ar.kennedy.is2011.utils.WebUtils;
 
 import com.google.appengine.api.datastore.Blob;
+import com.google.appengine.api.images.Image;
+import com.google.appengine.api.images.ImagesService;
+import com.google.appengine.api.images.ImagesServiceFactory;
+import com.google.appengine.api.images.Transform;
 
 /**
  * @author mlabarinas
@@ -74,7 +78,7 @@ public class ImageUploaderModel extends AbstractModel {
 			}
 			
 			if(multiPartRequest.getFiles().hasMoreElements()) {
-				picture.setContent(new Blob(((UploadedFile) multiPartRequest.getFiles().nextElement()).getContent().toByteArray()));
+				picture.setContent(new Blob(resize(((UploadedFile) multiPartRequest.getFiles().nextElement()).getContent().toByteArray())));
 			}
 			
 			picture.setTags(WebUtils.getParameter(multiPartRequest, "tags"));
@@ -127,6 +131,17 @@ public class ImageUploaderModel extends AbstractModel {
 		WebUtils.validateMandatoryParameters(request, new String[] {"id"});
 		
 		pictureDao.remove(PictureEy.class, WebUtils.getParameter(request, "id"));
+	}
+	
+	private byte[] resize(byte[] originalImage) {
+        Image oldImage = ImagesServiceFactory.makeImage(originalImage);   
+ 
+        ImagesService imagesService = ImagesServiceFactory.getImagesService();
+        Transform resize = ImagesServiceFactory.makeResize(300, 200);
+ 
+        Image resizedImage = imagesService.applyTransform(resize, oldImage);
+ 
+        return resizedImage.getImageData();
 	}
 	
 	/*
