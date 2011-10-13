@@ -83,7 +83,7 @@
 		</div>
     <div class="container">
 		<div class="hero-unit">
-			<h1>Trabajo Pr&aacute;ctico</h1>
+			<h1>FotobUK</h1> <!-- nombre feo si los hay... -->
 			<p>
 				Aplicaci&oacute;n creada en Google AppEngine utilizando varias tecnolog&iacute;as 
 			</p>
