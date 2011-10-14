@@ -49,9 +49,7 @@
 						<li>
 							<a href="#buscar">Buscar</a>
 						</li>
-						<li>
-							<a href="/data.html">Datos</a>
-						</li>
+	
 						<li>
 							<a href="/secure/imageUpload.jsp">Cargar imagen</a>
 						</li>
