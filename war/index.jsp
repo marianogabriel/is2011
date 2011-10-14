@@ -74,7 +74,7 @@
 							<a href="#Registrarse">Registrarse</a>
 						</li>
 						<li>
-							<a href="#recuperarContraseña">Olvid&eacute; mi contrase&ntilde;a</a>
+							<a href="#recuperarContrasenia">Olvid&eacute; mi contrase&ntilde;a</a>
 						</li>
 					</ul>
 					<form method="post" action="login" class="pull-right">
