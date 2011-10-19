@@ -18,6 +18,7 @@ public class SearchPicturesModel extends AbstractModel {
 	
 	private static final String PICTURE_BY_USER_QUERY = "SELECT e FROM PictureEy e WHERE e.username = :1";
 	private static final String LAST_PICTURE_UPLOAD_BY_USER_QUERY = "SELECT e FROM PictureEy e ORDER BY e.dateCreated DESC";
+	private static final String PICTURE_BY_TAGS = "SELECT e FROM PictureEy e WHERE e.tags IN (:1)";
 	
 	public SearchPicturesModel() {
 		super();
@@ -49,6 +50,20 @@ public class SearchPicturesModel extends AbstractModel {
 		} catch(EntityNotFoundException e) {
 			return null;
 		}
+	}
+	
+	public List<PictureEy> getPicturesByTags(Vector<Object> tags) {
+		List<PictureEy> pictures = null;
+
+		try {
+			pictures = pictureDao.createCollectionQuery(PICTURE_BY_TAGS, tags);
+
+		} catch (EntityNotFoundException e) {
+			e.printStackTrace();
+			return null;
+		}
+
+		return pictures;
 	}
 	
 }
