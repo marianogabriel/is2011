@@ -14,6 +14,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
 
+import com.google.appengine.api.images.Image;
+import com.google.appengine.api.images.ImagesService;
+import com.google.appengine.api.images.ImagesServiceFactory;
+import com.google.appengine.api.images.Transform;
+
 import ar.kennedy.is2011.constants.Constants;
 import ar.kennedy.is2011.exception.CharsetConvertException;
 import ar.kennedy.is2011.exception.ValidateMandatoryParameterException;
@@ -164,7 +169,17 @@ public class WebUtils {
 	}
 	
 	public static String getCompleteUrlForPicture(HttpServletRequest request, String id) {
-		return (new StringBuilder()).append(request.getRequestURL().subSequence(0, request.getRequestURL().lastIndexOf("/"))).append("/image?id=").append(id).toString();
+		return (new StringBuilder()).append(request.getRequestURL().substring(0, request.getRequestURL().lastIndexOf("/")).replace("secure", "")).append("image?id=").append(id).append("&version=").append("O").append("&access_token=").append(WebUtils.encrypt(Constants.ACCESS_TOKEN)).toString();
+	}
+	
+	public static byte[] resize(byte[] originalImage, Integer width, Integer height) {
+        Image oldImage = ImagesServiceFactory.makeImage(originalImage);   
+ 
+        ImagesService imagesService = ImagesServiceFactory.getImagesService();
+        Transform resize = ImagesServiceFactory.makeResize(width, height);
+        Image resizedImage = imagesService.applyTransform(resize, oldImage);
+ 
+        return resizedImage.getImageData();
 	}
 	
     public static String getStackStrace(Throwable e) throws Exception {

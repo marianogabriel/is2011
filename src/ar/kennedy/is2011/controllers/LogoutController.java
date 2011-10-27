@@ -22,7 +22,7 @@ public class LogoutController extends AbstractController {
 		response.sendRedirect("index.jsp");
 	}
 
-	public boolean validateLogin() {
+	public boolean validateLogin(HttpServletRequest request) {
 		return true;
 	}
 	

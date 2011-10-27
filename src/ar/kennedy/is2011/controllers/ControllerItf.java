@@ -11,6 +11,6 @@ import ar.kennedy.is2011.session.Session;
 public interface ControllerItf { 
 	
 	public void action(HttpServletRequest request, HttpServletResponse response, Session session) throws Exception;
-	public boolean validateLogin();
+	public boolean validateLogin(HttpServletRequest request);
 	
 }

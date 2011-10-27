@@ -25,7 +25,7 @@ public class LoginController extends AbstractController {
 		}
 	}
 	
-	public boolean validateLogin() {
+	public boolean validateLogin(HttpServletRequest request) {
 		return false;
 	}
 	

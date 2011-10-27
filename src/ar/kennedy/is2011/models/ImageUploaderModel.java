@@ -10,6 +10,7 @@ import org.apache.commons.lang.StringUtils;
 
 import ar.kennedy.is2011.constants.Constants;
 import ar.kennedy.is2011.db.dao.AbstractDao;
+import ar.kennedy.is2011.db.entities.AlbumEy;
 import ar.kennedy.is2011.db.entities.PictureEy;
 import ar.kennedy.is2011.db.entities.Usuario;
 import ar.kennedy.is2011.exception.ValidateMandatoryParameterException;
@@ -21,10 +22,6 @@ import ar.kennedy.is2011.utils.Aleatory;
 import ar.kennedy.is2011.utils.WebUtils;
 
 import com.google.appengine.api.datastore.Blob;
-import com.google.appengine.api.images.Image;
-import com.google.appengine.api.images.ImagesService;
-import com.google.appengine.api.images.ImagesServiceFactory;
-import com.google.appengine.api.images.Transform;
 
 /**
  * @author mlabarinas
@@ -34,6 +31,7 @@ public class ImageUploaderModel extends AbstractModel {
 	private HttpServletRequest request;
 	private Session userSession;
 	private AbstractDao<PictureEy> pictureDao;
+	private AbstractDao<AlbumEy> albumDao;
 	private String action;
 	
 	public ImageUploaderModel(HttpServletRequest request, Session userSession, String action) {
@@ -42,6 +40,7 @@ public class ImageUploaderModel extends AbstractModel {
 		this.request = request;
 		this.userSession =  userSession;
 		this.pictureDao = new AbstractDao<PictureEy>();
+		this.albumDao = new AbstractDao<AlbumEy>();
 		this.action = action;
 	}
 	
@@ -51,7 +50,7 @@ public class ImageUploaderModel extends AbstractModel {
 		MultiPartRequest multiPartRequest = new MultiPartRequest(request, (Constants.FILE_UPLOAD_MAX_SIZE * 1024 * 1024));
 		
 		try {
-			WebUtils.validateMandatoryParameters(multiPartRequest, new String[] {"picture_name", "album_name"});
+			WebUtils.validateMandatoryParameters(multiPartRequest, new String[] {"picture_name", "album_id"});
 			
 			String pictureName = WebUtils.getParameter(multiPartRequest, "picture_name");
 			if(!StringUtils.isAlphanumeric(pictureName)) {
@@ -61,12 +60,12 @@ public class ImageUploaderModel extends AbstractModel {
 				picture.setPictureName(pictureName);
 			}
 			
-			String albumName = WebUtils.getParameter(multiPartRequest, "album_name");
-			if(!StringUtils.isAlphanumeric(albumName)) {
-				formErrors.put("album_name", "El campo debe ser alfanumerico");
+			String albumId = WebUtils.getParameter(multiPartRequest, "album_id");
+			if("Elegir".equals(albumId)) {
+				formErrors.put("album_id", "Debe asociar seleccionar un album");
 			
 			} else {
-				picture.setAlbumName(albumName);
+				picture.setAlbumId(albumDao.findById(AlbumEy.class, albumId).getAlbumId());
 			}
 			
 			String url = WebUtils.getParameter(multiPartRequest, "url");
@@ -78,7 +77,16 @@ public class ImageUploaderModel extends AbstractModel {
 			}
 			
 			if(multiPartRequest.getFiles().hasMoreElements()) {
-				picture.setContent(new Blob(resize(((UploadedFile) multiPartRequest.getFiles().nextElement()).getContent().toByteArray())));
+				UploadedFile uploadPicture = (UploadedFile) multiPartRequest.getFiles().nextElement();
+				
+				if(uploadPicture.getContent().size() < Constants.ENTITY_WEIGHT) {
+					picture.setContentType(uploadPicture.getContentType());
+					picture.setContent(new Blob(((UploadedFile) multiPartRequest.getFiles().nextElement()).getContent().toByteArray()));
+					
+				} else {
+					picture.setContentType(uploadPicture.getContentType());
+					picture.setContent(new Blob(WebUtils.resize(((UploadedFile) multiPartRequest.getFiles().nextElement()).getContent().toByteArray(), 800, 600)));
+				}
 			}
 			
 			picture.setTags(WebUtils.getParameter(multiPartRequest, "tags"));
@@ -131,17 +139,6 @@ public class ImageUploaderModel extends AbstractModel {
 		WebUtils.validateMandatoryParameters(request, new String[] {"id"});
 		
 		pictureDao.remove(PictureEy.class, WebUtils.getParameter(request, "id"));
-	}
-	
-	private byte[] resize(byte[] originalImage) {
-        Image oldImage = ImagesServiceFactory.makeImage(originalImage);   
- 
-        ImagesService imagesService = ImagesServiceFactory.getImagesService();
-        Transform resize = ImagesServiceFactory.makeResize(300, 200);
- 
-        Image resizedImage = imagesService.applyTransform(resize, oldImage);
- 
-        return resizedImage.getImageData();
 	}
 	
 	/*

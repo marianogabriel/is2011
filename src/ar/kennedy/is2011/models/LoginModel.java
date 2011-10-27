@@ -50,6 +50,9 @@ public class LoginModel extends AbstractModel {
 				userSession = createLoginSession(request, response);
 				userSession.setElement("user", userEy);
 				SessionManager.save(request, userSession);
+				
+				/** For compatibility with old login */
+				request.getSession().setAttribute("usuarioLogeado", userEy);
 
 				return true;
 				

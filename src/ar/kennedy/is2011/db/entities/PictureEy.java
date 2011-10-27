@@ -29,8 +29,8 @@ public class PictureEy implements Serializable {
 	@Column(name = "USERNAME")
 	private String username;
 
-	@Column(name = "ALBUM_NAME")
-	private String albumName;
+	@Column(name = "ALBUM_ID")
+	private String albumId;
 
 	@Column(name = "TAGS")
 	private String tags;
@@ -40,6 +40,9 @@ public class PictureEy implements Serializable {
 	
 	@Column(name = "CONTENT")
 	private Blob content;
+	
+	@Column(name = "CONTENT_TYPE")
+	private String contentType;
 	
 	@Column(name = "DATE_CREATED")
 	private Date dateCreated;
@@ -51,19 +54,6 @@ public class PictureEy implements Serializable {
 		super();
 	}
 	
-	public PictureEy(String pictureId, String pictureName, String username, String albumName, String tags, Blob content) {
-		this();
-		
-		setPictureId(pictureId);
-		setPictureName(pictureName);
-		setUsername(username);
-		setAlbumName(albumName);
-		setTags(tags);
-		setContent(content);
-		setDateCreated(new Date());
-		setDateUpdated(getDateCreated());
-	}
-
 	public String getPictureId() {
 		return pictureId;
 	}
@@ -80,12 +70,12 @@ public class PictureEy implements Serializable {
 		this.username = username;
 	}
 
-	public String getAlbumName() {
-		return albumName;
+	public String getAlbumId() {
+		return albumId;
 	}
 
-	public void setAlbumName(String albumName) {
-		this.albumName = albumName;
+	public void setAlbumId(String albumId) {
+		this.albumId = albumId;
 	}
 
 	public String getTags() {
@@ -118,6 +108,14 @@ public class PictureEy implements Serializable {
 
 	public void setContent(Blob content) {
 		this.content = content;
+	}
+	
+	public String getContentType() {
+		return contentType;
+	}
+
+	public void setContentType(String contentType) {
+		this.contentType = contentType;
 	}
 
 	public Date getDateCreated() {

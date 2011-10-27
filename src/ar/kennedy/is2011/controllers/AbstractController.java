@@ -38,7 +38,7 @@ public abstract class AbstractController extends HttpServlet implements Controll
 			setHttpHeaders(response);
 			userSession = getSession(request, response);
 			
-			if(validateLogin()) {
+			if(validateLogin(request)) {
 				if(validateUserLogin(request, response, userSession)) {
 					if(!isJspPage()) {
 						action(request, response, userSession);
@@ -70,7 +70,7 @@ public abstract class AbstractController extends HttpServlet implements Controll
 	
 	public void action(HttpServletRequest request, HttpServletResponse response, Session userSession) throws Exception { }
 	
-	public abstract boolean validateLogin();
+	public abstract boolean validateLogin(HttpServletRequest request);
 	
 	protected Boolean validateUserLogin(HttpServletRequest request, HttpServletResponse response, Session userSession) {
 		return WebUtils.validateUserLogin(request, response, userSession);

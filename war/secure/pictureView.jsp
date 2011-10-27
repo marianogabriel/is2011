@@ -12,6 +12,6 @@
 </head>
 <body>
 	<%= Social.addLinks(WebUtils.getCompleteUrlForPicture(request, WebUtils.getParameter(request, "id")), "Picture") %>
-	<img src="/image?id=<%= WebUtils.getParameter(request, "id") %>">
+	<img src="/image?id=<%= WebUtils.getParameter(request, "id") %>&version=O">
 </body>
 </html>

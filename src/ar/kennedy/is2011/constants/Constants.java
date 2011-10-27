@@ -17,4 +17,11 @@ public interface Constants {
 	public static final Integer MAX_READ_BUFFER_SIZE = 1024 * 1024 * 5;
 	public static final Integer FILE_UPLOAD_MAX_SIZE = 5;
 	
+	public static final String ACCESS_TOKEN = "A45S4DF5S4G78AWE5487SDAS44G87JYIYUH454GFD8R7SD45";
+	
+	public static final Integer ENTITY_WEIGHT = 1048576;
+
+	public static final String PUBLIC_VISIBILITY = "public";
+	public static final String PRIVATE_VISIBILITY = "private";
+	
 }

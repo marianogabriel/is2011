@@ -62,7 +62,7 @@ public class ImageUploaderController extends AbstractController {
 		
 	}
 	
-	public boolean validateLogin() {
+	public boolean validateLogin(HttpServletRequest request) {
 		return true;
 	}
 	

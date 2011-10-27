@@ -47,7 +47,7 @@ public class LoginUsuarioServlet extends LoginController {
 	}
 	
 	@Override
-	public boolean validateLogin() {
+	public boolean validateLogin(HttpServletRequest request) {
 		return false;
 	}
 

@@ -4,6 +4,11 @@
 <%@page import="ar.kennedy.is2011.db.dao.AbstractDao"%>
 <%@page import="ar.kennedy.is2011.db.entities.PictureEy"%>
 <%@page import="ar.kennedy.is2011.utils.WebUtils"%>
+<%@page import="org.apache.commons.lang.StringUtils"%>
+<%@page import="ar.kennedy.is2011.db.entities.AlbumEy"%>
+<%@page import="java.util.List"%>
+<%@page import="ar.kennedy.is2011.constants.Constants"%>
+<%@page import="ar.kennedy.is2011.db.entities.Usuario"%>
 <%@page import="java.util.Map"%>
 <%@page import="java.util.HashMap"%>
 <%!
@@ -14,7 +19,10 @@
 <%
 	Session userSession = SessionManager.get(request, WebUtils.getSessionIdentificator(request));
 	Map<String, Object> errors = userSession.contains("errors") ? ((Map<String, Object>) userSession.getElement("errors")).containsKey("form_errors") ? (Map<String, Object>) ((Map<String, Object>) userSession.getElement("errors")).get("form_errors") : new HashMap<String, Object>() : new HashMap<String, Object>();
+	SearchPicturesModel searchPicturesModel = new SearchPicturesModel();
+	Usuario user = (Usuario) userSession.getElement("user");
 	PictureEy picture = null;
+	
 	String pictureId = WebUtils.getParameter(request, "id");
 	
 	if(pictureId != null) {
@@ -34,7 +42,9 @@
 	}
 %>
 <!DOCTYPE html>
-<html>
+
+<%@page import="ar.kennedy.is2011.models.SearchPicturesModel"%>
+<%@page import="java.util.Set"%><html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Cargar imagen</title>
@@ -56,9 +66,32 @@
 			<td><span class="validator" style="display: <%= errors.containsKey("picture_name") ? "block" : "none" %>"><p class="required"><%= errors.containsKey("picture_name") ? errors.get("picture_name") : "" %></p></span></td>
 		</tr>
 		<tr>
-			<td>Nombre del album:</td>
-			<td><input id="album_name" name="album_name" type="text" value="<%= getValue(picture.getAlbumName()) %>" /></td>
-			<td><span class="validator" style="display: <%= errors.containsKey("album_name") ? "block" : "none" %>"><p class="required"><%= errors.containsKey("album_name") ? errors.get("album_name") : "" %></p></span></td>
+			<td>Seleccion del album:</td>
+			<td>
+				<select id="album_id" name="album_id">
+					<%
+						if(StringUtils.isNotBlank(getValue(picture.getAlbumId()))) {
+					%>
+						<option value="<%= getValue(picture.getAlbumId()) %>"><%= getValue(picture.getAlbumId()) %></option>
+						<option value="Elegir">Elegir</option>
+					<%
+						} else {
+					%>
+						<option value="Elegir">Elegir</option>
+					<%
+						}
+					
+						Set<AlbumEy> albums = searchPicturesModel.getAlbumsToBeDisplayedByUser(user.getNombreUsr());	
+						
+						for(AlbumEy album : albums) {
+					%>
+							<option value="<%= album.getAlbumId() %>"><%= album.getAlbumId() %></option>
+					<%
+						}
+					%>
+				</select>
+			</td>
+			<td><span class="validator" style="display: <%= errors.containsKey("album_id") ? "block" : "none" %>"><p class="required"><%= errors.containsKey("album_id") ? errors.get("album_id") : "" %></p></span></td>
 		</tr>
 		<tr>
 			<td>Tags:</td>

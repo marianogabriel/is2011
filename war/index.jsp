@@ -69,6 +69,14 @@
 			<div class="fill">
 				<div class="container">
 					<a class="brand" href="#">Trabajo Pr&aacute;ctico</a>
+					<ul class="nav">
+						<li class="active">
+							<a href="/registracionRapida.jsp">Registrarse</a>
+						</li>
+						<li>
+							<a href="/restablecerClave.jsp">Olvid&eacute; mi contrase&ntilde;a</a>
+						</li>
+					</ul>
 					<form method="post" action="login" class="pull-right">
 						<input class="input-small" type="text" name="username"
 						placeholder="Usuario">
@@ -83,7 +91,7 @@
 		</div>
     <div class="container">
 		<div class="hero-unit">
-			<h1>Trabajo Pr&aacute;ctico</h1>
+			<h1>FotobUK</h1> <!-- nombre feo si los hay... -->
 			<p>
 				Aplicaci&oacute;n creada en Google AppEngine utilizando varias tecnolog&iacute;as 
 			</p>
