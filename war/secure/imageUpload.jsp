@@ -107,12 +107,6 @@ body {
 								<input id="url" name="url" type="text" size="80"
 									value="<%=getValue(picture.getUrl())%>" />
 							</div>
-							<div class="span6">
-								<span class="validator"
-									style="display: <%=errors.containsKey("add_url_or_file") ? "block" : "none"%>"><p
-										class="required"><%=errors.containsKey("add_url_or_file") ? errors
-					.get("add_url_or_file") : ""%></p></span>
-							</div>
 						</div>
 					</div>
 				</div>
@@ -163,12 +157,6 @@ body {
 								</select>
 							</div>
 						</div>
-						<div class="span6">
-							<span class="validator"
-								style="display: <%=errors.containsKey("album_id") ? "block" : "none"%>"><p
-									class="required"><%=errors.containsKey("album_id") ? errors.get("album_id")
-					: ""%></p></span>
-						</div>
 					</div>
 				</div>
 				<div class="row">
@@ -180,22 +168,26 @@ body {
 									value="<%=getValue(picture.getTags())%>" />
 							</div>
 						</div>
-						<div class="span6">
-							<span class="validator"
-								style="display: <%=errors.containsKey("tags") ? "block" : "none"%>"><p
-									class="required"><%=errors.containsKey("tags") ? errors.get("tags") : ""%></p></span>
-						</div>
 					</div>
 				</div>
 				<div class="row">
 					<div class="actions">
-							<input class="btn primary" type="submit" value="Enviar" />
+						<input class="btn primary" type="submit" value="Enviar" />
 					</div>
 				</div>
 				<div class="row">
 					<div class="clearfix">
-						<div class="span5">
-							<span class="validator"
+						<div class="span15">
+							<span class="alert-message error"
+								style="display: <%=errors.containsKey("add_url_or_file") ? "block" : "none"%>"><p
+									class="required"><%=errors.containsKey("add_url_or_file") ? errors
+					.get("add_url_or_file") : ""%></p></span> <span class="alert-message error"
+								style="display: <%=errors.containsKey("album_id") ? "block" : "none"%>"><p
+									class="required"><%=errors.containsKey("album_id") ? errors.get("album_id")
+					: ""%></p></span> <span class="alert-message error"
+								style="display: <%=errors.containsKey("tags") ? "block" : "none"%>"><p
+									class="required"><%=errors.containsKey("tags") ? errors.get("tags") : ""%></p></span>
+							<span class="alert-message error"
 								style="display: <%=errors.containsKey("mandatory_parameters") ? "block"
 					: "none"%>"><p
 									class="required"><%=errors.containsKey("mandatory_parameters") ? errors
