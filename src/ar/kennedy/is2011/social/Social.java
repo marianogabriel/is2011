@@ -17,7 +17,7 @@ public class Social {
 		
 		for(ShareItf share : (List<ShareItf>) SpringContext.getBean("socials")) {
 			links.append(share.addLink(url, title));
-			links.append("</br>");
+			//links.append("</br>");
 		}
 		
 		return links.toString();
