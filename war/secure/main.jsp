@@ -18,8 +18,8 @@
 	<head>
 		<meta charset="utf-8">
 		<title>Principal</title>
-		<meta name="GUI para aplicaciÃ³n is2011" content="">
-		<meta name="Grupo 4 - Â¿nombre?" content="">
+		<meta name="GUI para aplicación is2011" content="">
+		<meta name="Grupo 4 - ¿nombre?" content="">
 		<!--[if lt IE 9]>
 		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 		<![endif]-->
