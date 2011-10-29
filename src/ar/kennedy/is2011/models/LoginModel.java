@@ -45,6 +45,7 @@ public class LoginModel extends AbstractModel {
 		
 		try {
 			Usuario userEy = userDao.findById(Usuario.class, userId);
+			userDao.select(Usuario.class);
 			
 			if(validate(userEy, password)) {
 				userSession = createLoginSession(request, response);
