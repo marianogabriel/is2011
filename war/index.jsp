@@ -78,13 +78,9 @@
 						</li>
 					</ul>
 					<form method="post" action="login" class="pull-right">
-						<input class="input-small" type="text" name="username"
-						placeholder="Usuario">
-						<input class="input-small"
-						type="password" name="password" placeholder="Contrase&ntilde;a">
-						<button class="btn" type="submit">
-							Entrar
-						</button>
+						<input class="input-small" type="text"      name="username" placeholder="Usuario">
+						<input class="input-small" type="password"  name="password" placeholder="Contrase&ntilde;a">
+						<button class="btn"        type="submit">Entrar </button>
 					</form>
 				</div>
 			</div>

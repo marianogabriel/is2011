@@ -112,11 +112,16 @@ body {
 					for (PictureEy picture : pictures) {
 				%>
 				<tr>
-					<td><a
-						href="/secure/pictureView.jsp?id=<%=picture.getPictureId()%>"><img
-							class="thumbnail"
-							src="/image?id=<%=picture.getPictureId()%>&version=H" alt=""
-							width="90" height="90"> </a></td>
+					<td>
+						<ul class="media-grid">
+							<li><a
+								href="/secure/pictureView.jsp?id=<%=picture.getPictureId()%>"><img
+									class="thumbnail"
+									src="/image?id=<%=picture.getPictureId()%>&version=H" alt=""
+									width="90" height="90"> </a></li>
+						</ul>
+
+					</td>
 				</tr>
 				<%
 					}
