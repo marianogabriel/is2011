@@ -25,7 +25,7 @@
 		<![endif]-->
 		<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
-		<script src="assets/js/google-code-prettify/prettify.js"></script>
+		<!--script src="assets/js/google-code-prettify/prettify.js"></script  -->
 		<script src="/js/bootstrap-modal.js"></script>
 		<link href="/css/bootstrap.css" rel="stylesheet">
 		<link href="/css/docs.css" rel="stylesheet">
