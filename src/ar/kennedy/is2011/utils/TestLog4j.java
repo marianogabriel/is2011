@@ -6,17 +6,26 @@ import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.spi.LoggerRepository;
 import org.apache.log4j.FileAppender;
 import org.apache.log4j.SimpleLayout;
+import org.apache.log4j.PropertyConfigurator;
 
 
 public class TestLog4j {
 	//static Logger logger = Logger.getLogger("ar.kennedy.is2011.utils.TestLog4j");
 	static Logger logger = Logger.getLogger(TestLog4j.class);
 	static Logger logEx = Logger.getLogger("ar.kennedy.excepetion");
+	static final String LOG_PROPERTIES_FILE = "log4j.properties";
+	public TestLog4j(){
+		initLog4jLogging();
+	}
 
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
+		//Ejemplo de uso de log4j utilizando un archivo de properties.
+		testFileProperties();
+		
+		//comentar la linea anterior para probar el c—digo que sigue
 		BasicConfigurator.configure();
 		logger.setLevel(Level.INFO);
 		
@@ -85,4 +94,17 @@ public class TestLog4j {
 			logEx.debug("El indice: " + i +" contiene:" + intArray[i] +" ");
 		}
 	}
+	public static void testFileProperties(){
+		PropertyConfigurator.configure(LOG_PROPERTIES_FILE);
+		logger.info("testFileProperties");
+		logger.info("**********************************");
+		
+	}
+	public void initLog4jLogging(){
+		PropertyConfigurator.configure(LOG_PROPERTIES_FILE);
+		logger.info("**********************************");		
+		logger.info("Mensaje desde TestLog4java");
+		logger.info("**********************************");		
+	}
+
 }
