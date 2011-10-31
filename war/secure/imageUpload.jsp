@@ -101,7 +101,7 @@ body {
 								<input id="picture_file" name="picture_file" type="file" />
 							</div>
 						</div>
-						<div class="span4">
+						<div class="span4" style="margin-left: 50px">
 							<label for="mediumSelect">o Url:</label>
 							<div class="input">
 								<input id="url" name="url" type="text" size="80"
