@@ -90,7 +90,7 @@ form .input {
 			<div class="container">
 				<a class="brand" href="#">Recuperar Contrase&ntilde;a</a>
 				<ul class="nav">
-					<li class="active"><a href="/secure/main.jsp">Inicio</a></li>
+					<li class="active"><a href="/index.jsp">Inicio</a></li>
 				</ul>
 				<!--
 					<form method="post" action="login" class="pull-right">
