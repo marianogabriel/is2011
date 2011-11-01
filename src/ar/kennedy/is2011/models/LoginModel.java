@@ -43,6 +43,8 @@ public class LoginModel extends AbstractModel {
 	public Boolean validateLogin(HttpServletRequest request, HttpServletResponse response, String userId, String password) throws Exception {
 		Session userSession = null;
 		
+		log.debug("Validating login for user: " + userId);
+		
 		try {
 			Usuario userEy = userDao.findById(Usuario.class, userId);
 			userDao.select(Usuario.class);
@@ -55,18 +57,26 @@ public class LoginModel extends AbstractModel {
 				/** For compatibility with old login */
 				request.getSession().setAttribute("usuarioLogeado", userEy);
 
+				log.debug("Login user OK");
+				
 				return true;
 				
 			} else {
+				log.debug("Login user fail");
+				
 				errors.put("login_fail", "Fallo en la autenticacion");
 				return false;
 			}
 			
 		} catch(EntityNotFoundException e) {
+			log.debug("Login user fail");
+			
 			errors.put("login_fail", "El usuario no existe");
 			return false;
 		
 		} catch(ValidateMandatoryParameterException e) {
+			log.debug("Login user fail");
+			
 			errors.put("login_fail", "Faltan parametros obligatorios");
 			return false;
 		}
@@ -85,6 +95,8 @@ public class LoginModel extends AbstractModel {
 		Session userSession = null;
 		String sessionIdentificator = WebUtils.createSessionIdentificator();
 		String sessionValidate = Aleatory.getAleatoryString(10);
+		
+		log.debug("Creating user session");
 		
 		WebUtils.setCookie(response, new Cookie("sessionIdentificator", WebUtils.encrypt(sessionIdentificator)));
 		WebUtils.setCookie(response, new Cookie("sessionValidate", WebUtils.encrypt(sessionValidate)));

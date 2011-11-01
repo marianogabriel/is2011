@@ -18,6 +18,8 @@ public class TestController extends AbstractController {
 	private static final long serialVersionUID = 3707424606466635639L;
 	
 	public void action(HttpServletRequest request, HttpServletResponse response, Session userSession) throws Exception {
+		log.debug("Create basic entities to start");
+		
 		AbstractDao<Usuario> userDao = new AbstractDao<Usuario>();
 		AbstractDao<AlbumEy> albumDao = new AbstractDao<AlbumEy>();
 		Usuario user = new Usuario();

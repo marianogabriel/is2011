@@ -65,12 +65,10 @@ body {
 	<div class="container">
 		<div class="row">
 			<ul class="media-grid">
-				<li><a href="#"> <img class="span16"
-						src="/image?id=<%=WebUtils.getParameter(request, "id")%>&version=O">
-				</a></li>
-				<li><%=Social.addLinks(
-					WebUtils.getCompleteUrlForPicture(request,
-							WebUtils.getParameter(request, "id")), "Picture")%></li>
+				<li>
+					<img class="span16" src="/image?id=<%=WebUtils.getParameter(request, "id")%>&version=O">
+				</li>
+				<li><%=Social.addLinks(WebUtils.getCompleteUrlForPicture(request,WebUtils.getParameter(request, "id")), "Picture")%></li>
 			</ul>
 		</div>
 	</div>

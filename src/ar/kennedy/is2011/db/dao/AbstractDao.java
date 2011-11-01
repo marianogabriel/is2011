@@ -32,7 +32,7 @@ public class AbstractDao<T> implements InterfaceDao<T> {
 	public <D> T findById(Class<T> clazz, D str) throws EntityNotFoundException {
 		T generic = null;
 		
-		log.info("Find by PK");
+		log.debug("Find by PK over entity: " + clazz.getClass().getSimpleName());
 			
 		generic = em.find(clazz, str);
 			
@@ -40,7 +40,7 @@ public class AbstractDao<T> implements InterfaceDao<T> {
 			throw new EntityNotFoundException("The entity not exist");
 		}
 			
-		log.info("Entity found");
+		log.debug("Entity found");
 				
 		return generic;
 	}
@@ -49,13 +49,13 @@ public class AbstractDao<T> implements InterfaceDao<T> {
 		EntityTransaction et = em.getTransaction();
 		
 		try {
-			log.info("Persist an entity");
+			log.debug("Persist an entity: " + obj.getClass().getSimpleName());
 			
 			et.begin();
 			em.persist(obj);
 			et.commit();
 			
-			log.info("Entity save");
+			log.debug("Entity save");
 			
 		} catch (Exception e) {
 			log.error(e.getMessage());
@@ -67,13 +67,13 @@ public class AbstractDao<T> implements InterfaceDao<T> {
 		EntityTransaction et = em.getTransaction();
 		
 		try {
-			log.info("Delete an entity");
+			log.debug("Delete an entity: " + clazz.getClass().getSimpleName());
 			
 			et.begin();
 			em.remove(findById(clazz, str));
 			et.commit();
 		
-			log.info("Entity deleted");
+			log.debug("Entity deleted");
 			
 		} catch (Exception e) {
 			log.error(e.getMessage());
@@ -85,7 +85,7 @@ public class AbstractDao<T> implements InterfaceDao<T> {
 	public List<T> select(Class<T> clazz) throws EntityNotFoundException {
 		List<T> result = null;
 		
-		log.info("Get all object");
+		log.debug("Get all object over entity: " + clazz.getClass().getSimpleName());
 		
 		result = em.createQuery((new StringBuilder()).append("SELECT e FROM ").append(clazz.getName()).append(" e").toString()).getResultList();
 		
@@ -93,7 +93,7 @@ public class AbstractDao<T> implements InterfaceDao<T> {
 			throw new EntityNotFoundException("The entities not exist");
 		}
 		
-		log.info("Entities recovered");
+		log.debug("Entities recovered");
 		
 		return result;
 	}
@@ -102,7 +102,7 @@ public class AbstractDao<T> implements InterfaceDao<T> {
 	public T createSingleQuery(String ejbQuery, Vector<Object> parameters) throws EntityNotFoundException {
 		T result = null;
 		
-		log.info("Executing generated query");
+		log.debug("Executing generated query");
 		log.debug("Query: " + ejbQuery);
 		
 		Query query = em.createQuery(ejbQuery);
@@ -117,7 +117,7 @@ public class AbstractDao<T> implements InterfaceDao<T> {
 			throw new EntityNotFoundException("The entity not exist");
 		}
 		
-		log.info("Query executed");
+		log.debug("Query executed");
 		
 		return result;
 	}
@@ -126,7 +126,7 @@ public class AbstractDao<T> implements InterfaceDao<T> {
 	public List<T> createCollectionQuery(String ejbQuery, Vector<Object> parameters) throws EntityNotFoundException {
 		List<T> result = null;
 		
-		log.info("Executing generated query");
+		log.debug("Executing generated query");
 		log.debug("Query: " + ejbQuery);
 		
 		Query query = em.createQuery(ejbQuery);
@@ -141,7 +141,7 @@ public class AbstractDao<T> implements InterfaceDao<T> {
 			throw new EntityNotFoundException("The entity not exist");
 		}
 		
-		log.info("Query executed");
+		log.debug("Query executed");
 		
 		return result;
 	}

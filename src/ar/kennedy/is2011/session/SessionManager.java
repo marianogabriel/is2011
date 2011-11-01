@@ -25,6 +25,8 @@ public class SessionManager {
 	private SessionManager() { }
 	
 	public static Session create(HttpServletRequest request, String sessionId) {
+		log.debug("Create session to id: " + sessionId);
+		
 		SessionEy sessionEy = null;
 		Session session = null;
 		
@@ -51,6 +53,8 @@ public class SessionManager {
 				request.getSession(true).setAttribute(sessionId, session);
 			}
 			
+			log.debug("Session created");
+			
 		} catch(Exception e) {
 			log.error("Can't create session object", e);
 			throw new SessionOperationException("Can't create session object", e);
@@ -62,6 +66,8 @@ public class SessionManager {
 	public static Session get(HttpServletRequest request, String sessionId) {
 		SessionEy sessionEy = null;
 		Session session = null;
+		
+		log.debug("Get session for id: " + sessionId);
 		
 		try {
 			if(Constants.SESSION_MODE.equals("db")) {
@@ -84,6 +90,8 @@ public class SessionManager {
 	}
 	
 	public static void save(HttpServletRequest request, Session session) {
+		log.debug("Session save for id: " + session.getId());
+		
 		try {
 			session.setDateUpdated(new Date());
 			
@@ -109,6 +117,8 @@ public class SessionManager {
 	}
 	
 	public static void delete(HttpServletRequest request, String sessionId) {
+		log.debug("Session delete for id: " + sessionId);
+		
 		try {
 			if(Constants.SESSION_MODE.equals("db")) {
 				sessionDao.remove(SessionEy.class, sessionId);
