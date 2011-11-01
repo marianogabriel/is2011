@@ -39,10 +39,10 @@ public class LoginUsuarioServlet extends LoginController {
 		ModelItf model = new LoginModel();
 		
 		if(((LoginModel) model).validateLogin(request, response)) {
-			response.sendRedirect("secure/panelPrincipal.jsp");
+			response.sendRedirect("secure/main.jsp");
 		
 		} else {
-			response.sendRedirect("loginUsuario.jsp?e=t");
+			response.sendRedirect("index.jsp?e=t");
 		}
 	}
 	

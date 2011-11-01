@@ -35,7 +35,7 @@ public class ForwardServlet extends HttpServlet {
 		  
 		  if(usr != null){
 			if(pagina.equals("misFotos")){
-			  request.getRequestDispatcher("secure/panelPrincipal.jsp").forward(request, response);
+			  request.getRequestDispatcher("secure/main.jsp").forward(request, response);
 			}
 			  
 			  
@@ -43,7 +43,7 @@ public class ForwardServlet extends HttpServlet {
 		  }else{
 		  session.invalidate();
 		  request.setAttribute("iniciarSesion","Debe iniciar sesion nuevamente");
-		  request.getRequestDispatcher("loginUsuario.jsp").forward(request, response);
+		  request.getRequestDispatcher("index.jsp").forward(request, response);
 		  }		
 		
 				
