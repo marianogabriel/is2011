@@ -37,7 +37,7 @@ form .input {
 </style>
 </head>
 
-<body onLoad="menu1.escribeacordeon('menu',22,5);">
+<body>
 	<form name="form" action="/editarCuenta" method="post">
 		<input type="hidden" name="misFotos" value="misFotos">
 

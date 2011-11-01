@@ -1,122 +1,242 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <html>
 <head>
-<link rel="stylesheet" href="/css/css2.css" type="text/css" media="screen" />
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Registrarse</title>
-</head>
-<body class="my_body">
-	<form name="form" action="/Registracion" method="post">
-	<div align="center"><h1>Galer&iacute;a de Fotos - UK - 2011</h1></div>
-    <hr color="blue"></hr>
-	
-		<table border="1" cellpadding="10%" align="center" rules="none" class="borde_2">
-			<tr><td width="25%">Nuevo Usuario, por favor ingrese sus datos:</td></tr>
-			<tr></tr>
-			<tr>
-			  <td align="right"  width="70%">
-				<table cellpadding="5" border="0" rules="none" align="center">
-					<tr>
-					   <td align="right">Dirección e-mail*:&nbsp;</td>
-					   <td><input type="text" name="email" size="42" maxlength="40" id="mail" value="${usuarioNoRegistrado.mail }"></td>
-					</tr>
-					<tr>
-						<td align="right">Nick-Name*:&nbsp;</td>
-						<td><input type="text" name="nombreUsuario" size="42" maxlength="30" id="usr" value="${usuarioNoRegistrado.nombreUsr }"> ${errors}</td>
-					</tr>
-					<tr>
-						<td align="right">Contraseña*:&nbsp;</td>
-						<td><input type="password" name="clave" size="42" maxlength="36" id="pass"></td>
-					</tr>
-					<tr>
-						<td align="right">Repita Contraseña*:&nbsp;</td>
-						<td><input type="password" name="confirmarClave" size="42" maxlength="36" id="pass2"></td>
-					</tr>
-					<tr>
-						<td align="right" width="30%" >Palabra clave para recuperar su contraseña*:
-						(Nombre de mascota, película favorita,
-						deporte favorito, etc)&nbsp;</td>
-						<td valign="top">
-						   <select name="idPreguntaSecreta" id="psecr">
-						      <option value="">-Seleccione una pregunta-</option>
-						      <option value="1">Cuál es el nombre de su mascota?</option>
-							  <option value="2">Nombre de tu abuela materna?</option>
-							  <option value="3">Apellido de soltera de su madre?</option>
-							  <option value="4">Cuál es tu comida favorita?</option>
-							  <option value="5">Fecha de casamiento?</option>
-							  <option value="6">Nombre del primer colegio?</option>
-						  </select>
-					  </td>
-					</tr>	
-					<tr><td colspan="2" align="center"><input type="text" name="respuestaSecreta" size="42" maxlength="40" id="psec" value="${usuarioNoRegistrado.respuestaSecreta }"></td></tr>						
-				      <tr>
-				      <td colspan="2" align="center" valign="top">*(Todos los campos son obligatorios)</td>
-				      </tr>
-				   </table>
-			    </td>
-			 </tr>
-			<tr>
-			   <td colspan="2">Hacer clic en Acepto significa que acepta el  Contrato de servicios de Kennedy y la declaración de privacidad. </td>
-			</tr>
-			<tr>
-			   <td align="center"><input type="button" name="registar" value="Enviar" onclick="altaUsuario()"></td>
-			</tr> 
-		</table>
-	
-	</form>
+<meta name="GUI para aplicación is2011" content="">
+<meta name="Grupo 4 - ¿nombre?" content="">
+<!--[if lt IE 9]>
+		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+<script src="assets/js/google-code-prettify/prettify.js"></script>
+<script src="/js/bootstrap-modal.js"></script>
+<script src="/js/menu.js" type="text/javascript"></script>
 
+<link href="/css/bootstrap.css" rel="stylesheet">
+<link href="/css/docs.css" rel="stylesheet">
+<style type="text/css">
+
+/* Override some defaults */
+html,body {
+	background-color: #eee;
+}
+
+body {
+	padding-top: 40px;
+	/* 40px to make the container go all the way to the bottom of the topbar */
+}
+
+.show-grid [class *="span"] {
+	text-align: left;
+}
+
+.container>footer p {
+	text-align: center; /* center align it with the container */
+}
+
+.container {
+	/* downsize our container to make the content feel a bit tighter and more cohesive.
+				 * NOTE: this removes two full columns from the grid, meaning you only go to 14
+				 * columns and not 16.
+				 */
+	width: 820px;
+}
+/* The white background content wrapper */
+.content {
+	background-color: #fff;
+	padding: 20px;
+	margin: 0 -20px;
+	/* negative indent the amount of the padding to maintain the grid system */
+	-webkit-border-radius: 0 0 6px 6px;
+	-moz-border-radius: 0 0 6px 6px;
+	border-radius: 0 0 6px 6px;
+	-webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, .15);
+	-moz-box-shadow: 0 1px 2px rgba(0, 0, 0, .15);
+	box-shadow: 0 1px 2px rgba(0, 0, 0, .15);
+}
+/* Page header tweaks */
+.page-header {
+	background-color: #f5f5f5;
+	padding: 20px 20px 10px;
+	margin: -20px -20px 20px;
+}
+/* Give a quick and non-cross-browser friendly divider */
+.content .span10 {
+	margin-left: 0;
+	padding-left: 19px;
+	border-right: 1px solid #eee;
+}
+
+.topbar .btn {
+	border: 0;
+}
+
+label {
+	width: 270px;
+}
+
+form .input {
+	margin-left: 290px;
+}
+</style>
+</head>
+<body>
+	<div class="topbar">
+		<div class="fill">
+			<div class="container">
+				<a class="brand" href="#">Registrarse</a>
+				<ul class="nav">
+					<li class="active"><a href="/secure/main.jsp">Inicio</a></li>
+				</ul>
+				<!--
+					<form method="post" action="login" class="pull-right">
+						<input class="input-small" type="text" name="username"
+							placeholder="Usuario"> <input class="input-small"
+							type="password" name="password" placeholder="Contrase&ntilde;a">
+						<button class="btn" type="submit">Entrar</button>
+					</form>
+					-->
+			</div>
+		</div>
+	</div>
+
+	<form name="form" action="/Registracion" method="post">
+		<div class="container">
+			<div class="hero-unit">
+				<div class="row">
+					<div class="clearfix">
+						<h3>Nuevo Usuario, por favor ingrese sus datos:</h3>
+					</div>
+				</div>
+				<div class="row">
+					<div class="clearfix">
+						<div class="span16">
+							<label for="mediumSelect">Direcci&oacute;n de e-mail*:</label>
+							<div class="input">
+								<input type="text" name="email" id="mail"
+									value="${usuarioNoRegistrado.mail }">
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="clearfix">
+						<div class="span16">
+							<label for="mediumSelect">Nick-Name*:</label>
+							<div class="input">
+								<input type="text" name="nombreUsuario" id="usr"
+									value="${usuarioNoRegistrado.nombreUsr }"> <span
+									class="alert-message error">${errors}</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="clearfix">
+						<div class="span16">
+							<label for="mediumSelect">Contrase&ntilde;a*:</label>
+							<div class="input">
+								<input type="password" name="clave" id="pass">
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="clearfix">
+						<div class="span16">
+							<label for="mediumSelect">Repita contrase&ntilde;a*:</label>
+							<div class="input">
+								<input type="password" name="confirmarClave" id="pass2">
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="clearfix">
+						<div class="span16">
+							<label for="mediumSelect">Palabra clave para recuperar su
+								contrase&ntilde;a*:</label>
+							<div class="input">
+								<select name="idPreguntaSecreta" id="psecr">
+									<option value="">-Seleccione una pregunta-</option>
+									<option value="1">Cu&aacute;l es el nombre de su
+										mascota?</option>
+									<option value="2">Nombre de tu abuela materna?</option>
+									<option value="3">Apellido de soltera de su madre?</option>
+									<option value="4">Cu&aacute;l es tu comida favorita?</option>
+									<option value="5">Fecha de casamiento?</option>
+									<option value="6">Nombre del primer colegio?</option>
+								</select> <span class="help-block">(Nombre de mascota, película
+									favorita, deporte favorito, etc)</span> <input type="text"
+									name="respuestaSecreta" id="psec"
+									value="${usuarioNoRegistrado.respuestaSecreta }">
+							</div>
+						</div>
+					</div>
+				</div>
+				<span class="help-block">*Campos obligatorios.</span> <br /> <span
+					class="label notice">Nota</span> Hacer clic en ENVIAR implica
+				aceptar el Contrato de Servicios de Kennedy y la declaración de
+				privacidad.
+				<div class="actions">
+					<input class="btn primary" type="button" name="registar"
+						value="Enviar" onclick="altaUsuario()">
+					<div class="row"></div>
+				</div>
+			</div>
+		</div>
+	</form>
 </body>
 
 
 <script type="text/javascript">
+	var form = document.getElementsByName("form")[0];
+	var usr = document.getElementById("usr");
+	var mail = document.getElementById("mail");
+	var pass = document.getElementById("pass");
+	var pass2 = document.getElementById("pass2");
+	var psec = document.getElementById("psec");
 
-var form = document.getElementsByName("form")[0];
-var usr = document.getElementById("usr");
-var mail = document.getElementById("mail");
-var pass = document.getElementById("pass");
-var pass2 = document.getElementById("pass2");
-var psec = document.getElementById("psec");
+	msjError.style.display = 'none';
 
- msjError.style.display = 'none';
- 
- //loginError();
+	//loginError();
 
-
-
-  function altaUsuario(){
-	if(validarCampos()){
-    if(validarClave())
-	  form.submit();
+	function altaUsuario() {
+		if (validarCampos()) {
+			if (validarClave())
+				form.submit();
+		}
 	}
-  }
 
-  function validarCampos(){
-   if(usr.value=="" || mail.value=="" || pass.value=="" || pass2.value=="" || psec.value==""){
-      alert("Todos los campos son obligatorios");
-	  return false; 
-   }
-   return true;	
-  }
+	function validarCampos() {
+		if (usr.value == "" || mail.value == "" || pass.value == ""
+				|| pass2.value == "" || psec.value == "") {
+			alert("Todos los campos son obligatorios");
+			return false;
+		}
+		return true;
+	}
 
-  function limpiarCampos(){
-    usr.value = "";
-    mail.value = "";
-    pass.value = "";
-    pass2.value = "";
-    psec.value = "";
-  }
+	function limpiarCampos() {
+		usr.value = "";
+		mail.value = "";
+		pass.value = "";
+		pass2.value = "";
+		psec.value = "";
+	}
 
-  function validarClave(){
-   if(pass.value == pass2.value){
-      return true;
-	  }
-	alert("Las claves ingresadas no coinciden");  
-    return false;	   
-  }
-  
+	function validarClave() {
+		if (pass.value == pass2.value) {
+			return true;
+		}
+		alert("Las claves ingresadas no coinciden");
+		return false;
+	}
 </script>
 
 </html>
