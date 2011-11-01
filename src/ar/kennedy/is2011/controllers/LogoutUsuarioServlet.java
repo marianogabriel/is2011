@@ -38,7 +38,7 @@ public class LogoutUsuarioServlet extends HttpServlet {
 		
 		 HttpSession session = request.getSession();	
 		 session.invalidate();
-		 request.getRequestDispatcher("loginUsuario.jsp").forward(request, response);
+		 request.getRequestDispatcher("index.jsp").forward(request, response);
 				
 	}
 
