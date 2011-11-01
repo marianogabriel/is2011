@@ -2,8 +2,7 @@ package ar.kennedy.is2011.db.dao;
 
 import ar.kennedy.is2011.db.entities.Usuario;
 
-public class AdministrarRegistracionUsuarioDAOImpl implements
-		AdministrarRegistracionUsuarioDAO {
+public class AdministrarRegistracionUsuarioDAOImpl implements AdministrarRegistracionUsuarioDAO {
 
 	AbstractDao<Usuario> usuarioDao;
 	
@@ -13,15 +12,17 @@ public class AdministrarRegistracionUsuarioDAOImpl implements
 		usuarioDao = new AbstractDao<Usuario>();
 	}
 	
-	@Override
-	public Usuario buscarUsuario(String idUsr) {
-		// TODO Auto-generated method stub
-		return null;
+	public Usuario buscarUsuario(String nombreUsr) {
+		try {
+			return usuarioDao.findById(Usuario.class, nombreUsr);
+			
+		} catch(Exception e) {
+			return null;
+		}
 	}
 
 	@Override
 	public boolean borrarUsuario(Usuario usuario) {
-		
 		return false;
 	}
 

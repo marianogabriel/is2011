@@ -13,15 +13,15 @@ import ar.kennedy.is2011.db.dao.AdministrarRegistracionUsuarioDAOImpl;
 import ar.kennedy.is2011.db.entities.Usuario;
 
 public class EditarCuentaUsuarioServlet extends HttpServlet{
+
 	private static final long serialVersionUID = 1L;
-	
 	
 	public EditarCuentaUsuarioServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		AdministrarRegistracionUsuarioDAO serv = new AdministrarRegistracionUsuarioDAOImpl(); 
 		
 		String nombre = request.getParameter("nombreUsr");
 		String apellido = request.getParameter("apellidoUsr");
@@ -35,9 +35,9 @@ public class EditarCuentaUsuarioServlet extends HttpServlet{
 		String resp = request.getParameter("respuestaUsr");
 		
 		HttpSession sesion = request.getSession();
-		Usuario usuario = (Usuario) sesion.getAttribute("usuarioLogeado");
+		Usuario usuario = serv.buscarUsuario(((Usuario) sesion.getAttribute("usuarioLogeado")).getNombreUsr());
 		
-		if(usuario != null){
+		if(usuario != null) {
 		  usuario.setNombre(nombre);
 		  usuario.setApellido(apellido);
 		  usuario.setMail(mail);
@@ -48,16 +48,13 @@ public class EditarCuentaUsuarioServlet extends HttpServlet{
 		  usuario.setIdProvicia(idProv);
 		  usuario.setIdPreguntaSecreta(idPreg);
 		  usuario.setRespuestaPregunta(resp);
-			
-		  AdministrarRegistracionUsuarioDAO serv = new AdministrarRegistracionUsuarioDAOImpl();  	
+		  	
 		  serv.modificarUsuario(usuario);
 		  request.getRequestDispatcher("secure/editarCuentaUsuario.jsp").forward(request, response);	
-		}
-		else{
-			request.getRequestDispatcher("errorLogin.jsp").forward(request, response);  	
-		}
-			
 		
+		} else {
+			request.getRequestDispatcher("errorLogin.jsp").forward(request, response);  	
+		}			
 	}
 
 }

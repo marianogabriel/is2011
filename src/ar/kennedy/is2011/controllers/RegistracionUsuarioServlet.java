@@ -40,13 +40,13 @@ public class RegistracionUsuarioServlet extends HttpServlet{
 		}else{
 			
 			if(servicio.nuevoUsuario(usuario)){
-				HttpSession sesion = request.getSession();
-				sesion.setAttribute("usuarioLogeado", usuario); 	
+				HttpSession session = request.getSession();
+				session.setAttribute("usuarioLogeado", usuario); 	
 				request.getRequestDispatcher("index.jsp").forward(request, response);
 			
 			}else{	  
-			System.out.println(" error en en alta ususario");
-			request.getRequestDispatcher("registracionRapida.jsp").forward(request, response);
+				System.out.println(" error en en alta ususario");
+				request.getRequestDispatcher("registracionRapida.jsp").forward(request, response);
 			}
 		}
 	}
