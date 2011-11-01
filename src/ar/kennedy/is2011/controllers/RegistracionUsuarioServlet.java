@@ -42,7 +42,7 @@ public class RegistracionUsuarioServlet extends HttpServlet{
 			if(servicio.nuevoUsuario(usuario)){
 				HttpSession sesion = request.getSession();
 				sesion.setAttribute("usuarioLogeado", usuario); 	
-				request.getRequestDispatcher("loginUsuario.jsp").forward(request, response);
+				request.getRequestDispatcher("index.jsp").forward(request, response);
 			
 			}else{	  
 			System.out.println(" error en en alta ususario");
