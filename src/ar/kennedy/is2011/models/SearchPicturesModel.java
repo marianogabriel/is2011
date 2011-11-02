@@ -103,6 +103,9 @@ private static final String PICTURE_BY_TAGS = "SELECT e FROM PictureEy e WHERE e
 			
 			if(albums.size() > 0) {
 				pictures = pictureDao.createCollectionQuery(PICTURES_TO_BE_DISPAYED_BY_USER_QUERY, new Vector<Object>(Arrays.asList(new String[] {getAlbumsSplit(albums)})));
+			
+			} else {
+				pictures = new ArrayList<PictureEy>();
 			}
 		
 			return pictures;
