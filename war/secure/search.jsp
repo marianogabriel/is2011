@@ -66,7 +66,7 @@ body {
 				<a class="brand" href="/secure/search.jsp">Buscar</a>
 				<ul class="nav">
 					<li class="active"><a href="/secure/main.jsp">Inicio</a></li>
-					<li><a href="/secure/search.jsp">Buscar</a></li>
+					<!-- <li><a href="/secure/search.jsp">Buscar</a></li> -->
 				</ul>
 				<p class="pull-right">
 					Logueado como <a href="/secure/editarCuentaUsuario.jsp"><%=user.getNombreUsr()%></a><a
