@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@page import="ar.kennedy.is2011.session.Session"%>
 <%@page import="ar.kennedy.is2011.session.SessionManager"%>
 <%@page import="ar.kennedy.is2011.db.dao.AbstractDao"%>
@@ -12,18 +11,31 @@
 <%@page import="ar.kennedy.is2011.db.entities.Usuario"%>
 <%@page import="java.util.Map"%>
 <%@page import="java.util.HashMap"%>
-
-<%!private String getValue(Object object) {
+<%@page import="ar.kennedy.is2011.models.SearchPicturesModel"%>
+<%@page import="java.util.Set"%>
+<%!
+	private String getValue(Object object) {
 		return object != null ? object.toString() : "";
-	}%>
+	}
+
+	private String getAllAlbumsList(List<AlbumEy> albums) {
+		StringBuilder list = new StringBuilder();
+		
+		for(int i = 0; i < albums.size(); i++) {	
+			if(i == (albums.size() - 1)) {
+				list.append("'").append(albums.get(i).getAlbumId()).append("'");
+			
+			} else {
+				list.append("'").append(albums.get(i).getAlbumId()).append("', ");
+			}
+		}
+		
+		return list.toString();
+	}
+%>
 <%
-	Session userSession = SessionManager.get(request,
-			WebUtils.getSessionIdentificator(request));
-	Map<String, Object> errors = userSession.contains("errors") ? ((Map<String, Object>) userSession
-			.getElement("errors")).containsKey("form_errors") ? (Map<String, Object>) ((Map<String, Object>) userSession
-			.getElement("errors")).get("form_errors")
-			: new HashMap<String, Object>()
-			: new HashMap<String, Object>();
+	Session userSession = SessionManager.get(request, WebUtils.getSessionIdentificator(request));
+	Map<String, Object> errors = userSession.contains("errors") ? ((Map<String, Object>) userSession.getElement("errors")).containsKey("form_errors") ? (Map<String, Object>) ((Map<String, Object>) userSession.getElement("errors")).get("form_errors") : new HashMap<String, Object>() : new HashMap<String, Object>();
 	SearchPicturesModel searchPicturesModel = new SearchPicturesModel();
 	Usuario user = (Usuario) userSession.getElement("user");
 	PictureEy picture = null;
@@ -47,9 +59,7 @@
 	}
 %>
 <!DOCTYPE html>
-
-<%@page import="ar.kennedy.is2011.models.SearchPicturesModel"%>
-<%@page import="java.util.Set"%><html>
+<html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Sube tu imagen</title>
@@ -127,8 +137,7 @@ body {
 						<div class="span6">
 							<span class="validator"
 								style="display: <%=errors.containsKey("picture_name") ? "block" : "none"%>"><p
-									class="required"><%=errors.containsKey("picture_name") ? errors
-					.get("picture_name") : ""%></p></span>
+									class="required"><%=errors.containsKey("picture_name") ? errors.get("picture_name") : ""%></p></span>
 						</div>
 					</div>
 				</div>
@@ -150,12 +159,8 @@ body {
 									<%
 										}
 
-										// Set<AlbumEy> albums = searchPicturesModel
-										//		.getAlbumsToBeDisplayedByUser(user.getNombreUsr());
-
-										 List<AlbumEy> albums = searchPicturesModel
-												.getAllAlbums();
-
+										Set<AlbumEy> albums = searchPicturesModel.getAlbumsToBeDisplayedByUser(user.getNombreUsr());
+										
 										for (AlbumEy album : albums) {
 									%>
 									<option value="<%=album.getAlbumId()%>"><%=album.getAlbumId()%></option>
@@ -206,81 +211,76 @@ body {
 				</div>
 				
 
-				<script language="JavaScript"> 
-
-	function cargarAlbums()
-	{
-
-		var list = (<%=albums%>);
+<script language="JavaScript"> 
+	function cargarAlbums() {
+		var list = [<%= getAllAlbumsList(searchPicturesModel.getAllAlbums()) %>];
+		var selectedOption = document.getElementById('album_id').options[document.getElementById('album_id').selectedIndex].value;
+		
 		var combo = document.getElementById('album_id');
 		combo.options.length = 0;
-		//Agrero la opcion nuevo album
-		var option = document.createElement('option');
-    	combo.options.add(option);
-		option.value = 0;
-		option.innerText = '...';
-		
-		var option = document.createElement('option');
-    	combo.options.add(option);
-		option.value = 0;
-		option.innerText = 'Crear nuevo album...';
-		
-		for (i=0;i<list.length;i++)
-		{
-	        var option = document.createElement('option');
-		 // añadir el elemento option y sus valores
-      		combo.options.add(option);
-			option.value = i + 1;
-			option.innerText = list[i];
-		}
-       
-	}
-	function llamarPopUp()
-	{
-		alert("llamarPopUp");
-		 var valor = document.getElementById('album_id').options[document.getElementById('album_id').selectedIndex].innerText;
 
-		 alert(valor);
-		 if (valor == 'Crear nuevo album...' )
-		 {
-			 var name=prompt("Nombre del album","");
-			 if (name!=null && name!="")
-				 if (!existeAlbum(name))
-				  {
+		//Agrero la opcion seleccionada
+		combo.options.add(new Option(selectedOption, selectedOption));
+
+		//Agrero la elegir si no es la opcion seleccionada
+		if(selectedOption != 'Elegir') {
+			combo.options.add(new Option('Elegir', 'Elegir'));
+		}
+		
+		for (i=0; i < list.length; i++)
+		{
+			//Añadir los elementos de la lista
+		 	combo.options.add(new Option(list[i], list[i]));
+		}
+
+		//Agrero la opcion Crear nuevo album
+    	combo.options.add(new Option('Crear nuevo album...', 'nuevo'));
+	}
+
+	function llamarPopUp() {
+		 var valor = document.getElementById('album_id').options[document.getElementById('album_id').selectedIndex].value;
+
+		 if (valor == 'nuevo') {
+			 var name = prompt("Nombre del album","");
+			 var visibility = prompt("Visibilidad (public/private)","");
+
+			 if((name != null && name != "") && (visibility == 'public' || visibility == 'private')) {
+				 if(!existeAlbum(name)) {
 					//Vuelvo a cargar combo con el contenido de la base de datos
 					cargarAlbums();
 					//agrego al combo mi nuevo nombre de album
-					var option = document.createElement('option');
+					var option = new Option(name, name + ';' + visibility);
 					var combo = document.getElementById('album_id');
      		      	combo.options.add(option);
-					option.value = name;
-					option.innerText = name;
 					combo.options[combo.length - 1].selected =  "1";
-					//document.getElementById('album_name').innerText = name;
-				  }
-				 else
-				 {
+
+				} else {
 					alert('Ya existe el album ' + name);
 					llamarPopUp();
 				 }
-		 
+
+			 } else {
+				 alert('Datos incorrectos, verifique sus entradas');
+				 llamarPopUp();
+			 } 
 		 }
 	}
 
-	function existeAlbum(name)
-	{
+	function existeAlbum(name) {
 		//recorro combo en busca de este valor
 		var combo = document.getElementById('album_id');
-		for (i=0;i<combo.length;i++)
-		{
-			if (name==combo.options[i].innerText) 
+
+		for (i=0;i<combo.length;i++) {
+			if(name == combo.options[i].value) { 
 				return true;
+			}
 		}
+
 		return false;
 	}
 	
 
-function Abrir_ventana (pagina) {
+	function Abrir_ventana (pagina) {
 		var opciones="toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, width=250, height=250, top=85, left=140"; modal=yes;
 		
 		if (window.showModalDialog) {

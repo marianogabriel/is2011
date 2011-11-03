@@ -24,6 +24,7 @@ public class SearchPicturesModel extends AbstractModel {
 	private static final String LAST_PICTURE_UPLOAD_BY_USER_QUERY = "SELECT e FROM PictureEy e WHERE e.username = :1 ORDER BY e.dateCreated DESC";
 	private static final String ALBUMS_TO_BE_DISPAYED_BY_VISIBILITY_QUERY = "SELECT a FROM AlbumEy a WHERE a.visibility = :1";
 	private static final String ALBUMS_TO_BE_DISPAYED_BY_OWNER_QUERY = "SELECT a FROM AlbumEy a WHERE a.owner = :1";
+	@SuppressWarnings("unused")
 	private static final String PICTURES_TO_BE_DISPAYED_BY_USER_QUERY = "SELECT e FROM PictureEy e WHERE e.albumId IN (:1)";
 	private static final String PICTURE_BY_ALBUM_QUERY = "SELECT e FROM PictureEy e WHERE e.albumId = :1";
 	private static final String ALL_ALBUMS = "SELECT a FROM AlbumEy a ";
@@ -110,24 +111,19 @@ private static final String PICTURE_BY_TAGS = "SELECT e FROM PictureEy e WHERE e
 	}
 	
 	public List<PictureEy> getPicturesToBeDisplayedByUser(String username) {
-		Set<AlbumEy> albums = null;
-		List<PictureEy> pictures = null;
+		List<PictureEy> pictures = new ArrayList<PictureEy>();
+		Set<AlbumEy> albums = getAlbumsToBeDisplayedByUser(username);
 		
-		try {
-			albums = getAlbumsToBeDisplayedByUser(username);
-			
-			if(albums.size() > 0) {
-				pictures = pictureDao.createCollectionQuery(PICTURES_TO_BE_DISPAYED_BY_USER_QUERY, new Vector<Object>(Arrays.asList(new String[] {getAlbumsSplit(albums)})));
-			
-			} else {
-				pictures = new ArrayList<PictureEy>();
+		if(albums.size() > 0) {
+			for(AlbumEy album : albums) {
+				pictures.addAll(getPictureByAlbum(album.getAlbumId()));
 			}
-		
-			return pictures;
-			
-		} catch(EntityNotFoundException e) {
-			return new ArrayList<PictureEy>();
+				
+		} else {
+			pictures = new ArrayList<PictureEy>();
 		}
+	
+		return pictures;
 	}
 	
 	public List<PictureEy> getPictureByAlbum(String albumId) {
@@ -143,15 +139,20 @@ private static final String PICTURE_BY_TAGS = "SELECT e FROM PictureEy e WHERE e
 		return pictures;
 	}
 	
+	@SuppressWarnings("unused")
 	private String getAlbumsSplit(Set<AlbumEy> albums) {
 		StringBuilder splitAlbums = new StringBuilder();
 		
+		int i = 0;
 		for(AlbumEy album : albums) {
-			splitAlbums.append(album.getAlbumId()).append(",");
-		}
-		
-		if(albums.size() > 0) {
-			return splitAlbums.toString().substring(0, splitAlbums.toString().length() - 1);
+			if(i == (albums.size() - 1)) {
+				splitAlbums.append(album.getAlbumId());
+				
+			} else {
+				splitAlbums.append(album.getAlbumId()).append(",");
+			}
+			
+			i++;
 		}
 		
 		return splitAlbums.toString();

@@ -1,9 +1,7 @@
 package ar.kennedy.is2011.models;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -70,18 +68,17 @@ public class ImageUploaderModel extends AbstractModel {
 				formErrors.put("album_id", "Debe asociar seleccionar un album");
 			
 			} else {
-				
 				try {
-					picture.setAlbumId(albumDao.findById(AlbumEy.class, albumId).getAlbumId());
-					System.out.println("Se obtuvo el album: " + picture.getAlbumId());
+					picture.setAlbumId(albumDao.findById(AlbumEy.class, albumId.substring(0, albumId.indexOf(";"))).getAlbumId());
 				
 				} catch (EntityNotFoundException e) {
 					AlbumEy nuevoAlbum = new AlbumEy();
-					nuevoAlbum.setAlbumId(albumId);
+					nuevoAlbum.setAlbumId(albumId.substring(0, albumId.indexOf(";")));
+					nuevoAlbum.setVisibility(albumId.substring(albumId.indexOf(";") + 1, albumId.length()));
+					nuevoAlbum.setOwner(((Usuario) userSession.getElement("user")).getNombreUsr());
 					albumDao.persist(nuevoAlbum);
 					
-					picture.setAlbumId(albumDao.findById(AlbumEy.class, albumId).getAlbumId());					
-					System.out.println("Se creó el album: " + picture.getAlbumId());
+					picture.setAlbumId(albumId.substring(0, albumId.indexOf(";")));					
 				}
 			}
 			
