@@ -26,6 +26,8 @@ public class SearchPicturesModel extends AbstractModel {
 	private static final String ALBUMS_TO_BE_DISPAYED_BY_OWNER_QUERY = "SELECT a FROM AlbumEy a WHERE a.owner = :1";
 	private static final String PICTURES_TO_BE_DISPAYED_BY_USER_QUERY = "SELECT e FROM PictureEy e WHERE e.albumId IN (:1)";
 	private static final String PICTURE_BY_ALBUM_QUERY = "SELECT e FROM PictureEy e WHERE e.albumId = :1";
+	private static final String ALL_ALBUMS = "SELECT a FROM AlbumEy a ";
+
 	
 private static final String PICTURE_BY_TAGS = "SELECT e FROM PictureEy e WHERE e.tags IN (:1)";
 	
@@ -91,6 +93,19 @@ private static final String PICTURE_BY_TAGS = "SELECT e FROM PictureEy e WHERE e
 			
 		} catch(EntityNotFoundException e) {
 			return new HashSet<AlbumEy>();
+		}
+	}
+	
+	public List<AlbumEy> getAllAlbums() {
+		List<AlbumEy> albums = null;
+		
+		try {
+			albums = albumDao.createCollectionQuery(ALL_ALBUMS, null);
+			
+			return albums;
+			
+		} catch(EntityNotFoundException e) {
+			return new ArrayList<AlbumEy>();
 		}
 	}
 	
