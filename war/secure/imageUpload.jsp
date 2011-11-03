@@ -12,6 +12,7 @@
 <%@page import="ar.kennedy.is2011.db.entities.Usuario"%>
 <%@page import="java.util.Map"%>
 <%@page import="java.util.HashMap"%>
+
 <%!private String getValue(Object object) {
 		return object != null ? object.toString() : "";
 	}%>
@@ -73,7 +74,11 @@ body {
 }
 </style>
 </head>
+<!--  
 <body>
+-->
+<body onload="cargarAlbums()">
+
 	<div class="topbar">
 		<div class="topbar-inner">
 			<div class="container">
@@ -132,7 +137,7 @@ body {
 						<div class="span5">
 							<label for="mediumSelect">Seleccion del album:</label>
 							<div class="input">
-								<select id="album_id" name="album_id">
+								<select id="album_id" name="album_id" onchange="llamarPopUp()">
 									<%
 										if (StringUtils.isNotBlank(getValue(picture.getAlbumId()))) {
 									%>
@@ -145,8 +150,11 @@ body {
 									<%
 										}
 
-										Set<AlbumEy> albums = searchPicturesModel
-												.getAlbumsToBeDisplayedByUser(user.getNombreUsr());
+										// Set<AlbumEy> albums = searchPicturesModel
+										//		.getAlbumsToBeDisplayedByUser(user.getNombreUsr());
+
+										 List<AlbumEy> albums = searchPicturesModel
+												.getAllAlbums();
 
 										for (AlbumEy album : albums) {
 									%>
@@ -154,6 +162,7 @@ body {
 									<%
 										}
 									%>
+									<option value="Nuevo">Crear nuevo album...</option>
 								</select>
 							</div>
 						</div>
@@ -195,6 +204,94 @@ body {
 						</div>
 					</div>
 				</div>
+				
+
+				<script language="JavaScript"> 
+
+	function cargarAlbums()
+	{
+
+		var list = (<%=albums%>);
+		var combo = document.getElementById('album_id');
+		combo.options.length = 0;
+		//Agrero la opcion nuevo album
+		var option = document.createElement('option');
+    	combo.options.add(option);
+		option.value = 0;
+		option.innerText = '...';
+		
+		var option = document.createElement('option');
+    	combo.options.add(option);
+		option.value = 0;
+		option.innerText = 'Crear nuevo album...';
+		
+		for (i=0;i<list.length;i++)
+		{
+	        var option = document.createElement('option');
+		 // añadir el elemento option y sus valores
+      		combo.options.add(option);
+			option.value = i + 1;
+			option.innerText = list[i];
+		}
+       
+	}
+	function llamarPopUp()
+	{
+		alert("llamarPopUp");
+		 var valor = document.getElementById('album_id').options[document.getElementById('album_id').selectedIndex].innerText;
+
+		 alert(valor);
+		 if (valor == 'Crear nuevo album...' )
+		 {
+			 var name=prompt("Nombre del album","");
+			 if (name!=null && name!="")
+				 if (!existeAlbum(name))
+				  {
+					//Vuelvo a cargar combo con el contenido de la base de datos
+					cargarAlbums();
+					//agrego al combo mi nuevo nombre de album
+					var option = document.createElement('option');
+					var combo = document.getElementById('album_id');
+     		      	combo.options.add(option);
+					option.value = name;
+					option.innerText = name;
+					combo.options[combo.length - 1].selected =  "1";
+					//document.getElementById('album_name').innerText = name;
+				  }
+				 else
+				 {
+					alert('Ya existe el album ' + name);
+					llamarPopUp();
+				 }
+		 
+		 }
+	}
+
+	function existeAlbum(name)
+	{
+		//recorro combo en busca de este valor
+		var combo = document.getElementById('album_id');
+		for (i=0;i<combo.length;i++)
+		{
+			if (name==combo.options[i].innerText) 
+				return true;
+		}
+		return false;
+	}
+	
+
+function Abrir_ventana (pagina) {
+		var opciones="toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, width=250, height=250, top=85, left=140"; modal=yes;
+		
+		if (window.showModalDialog) {
+			window.showModalDialog(pagina,"","dialogWidth:255px;dialogHeight:250px");
+		} 
+		else 
+		{
+			window.open(pagina,"",opciones);
+		}
+	}
+</script>
 			</form>
 		</div>
 	</div>
