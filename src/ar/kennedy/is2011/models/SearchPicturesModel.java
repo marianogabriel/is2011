@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.Vector;
 
+import org.apache.commons.lang.StringUtils;
+
 import ar.kennedy.is2011.db.dao.AbstractDao;
 import ar.kennedy.is2011.db.entities.AlbumEy;
 import ar.kennedy.is2011.db.entities.PictureEy;
@@ -65,7 +67,7 @@ public class SearchPicturesModel extends AbstractModel {
 
 		try {
 			for(PictureEy picture : pictureDao.select(PictureEy.class)) {
-				if(picture.getTags().contains(value)) {
+				if(StringUtils.isNotBlank(picture.getTags()) && picture.getTags().contains(value)) {
 					pictures.add(picture);
 				}
 			}
