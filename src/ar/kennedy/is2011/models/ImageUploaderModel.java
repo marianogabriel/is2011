@@ -1,7 +1,9 @@
 package ar.kennedy.is2011.models;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,6 +15,7 @@ import ar.kennedy.is2011.db.dao.AbstractDao;
 import ar.kennedy.is2011.db.entities.AlbumEy;
 import ar.kennedy.is2011.db.entities.PictureEy;
 import ar.kennedy.is2011.db.entities.Usuario;
+import ar.kennedy.is2011.db.exception.EntityNotFoundException;
 import ar.kennedy.is2011.exception.ValidateMandatoryParameterException;
 import ar.kennedy.is2011.picture.MultiPartRequest;
 import ar.kennedy.is2011.picture.UploadedFile;
@@ -33,6 +36,8 @@ public class ImageUploaderModel extends AbstractModel {
 	private AbstractDao<PictureEy> pictureDao;
 	private AbstractDao<AlbumEy> albumDao;
 	private String action;
+	
+	
 	
 	public ImageUploaderModel(HttpServletRequest request, Session userSession, String action) {
 		super();
@@ -65,7 +70,19 @@ public class ImageUploaderModel extends AbstractModel {
 				formErrors.put("album_id", "Debe asociar seleccionar un album");
 			
 			} else {
-				picture.setAlbumId(albumDao.findById(AlbumEy.class, albumId).getAlbumId());
+				
+				try {
+					picture.setAlbumId(albumDao.findById(AlbumEy.class, albumId).getAlbumId());
+					System.out.println("Se obtuvo el album: " + picture.getAlbumId());
+				
+				} catch (EntityNotFoundException e) {
+					AlbumEy nuevoAlbum = new AlbumEy();
+					nuevoAlbum.setAlbumId(albumId);
+					albumDao.persist(nuevoAlbum);
+					
+					picture.setAlbumId(albumDao.findById(AlbumEy.class, albumId).getAlbumId());					
+					System.out.println("Se creó el album: " + picture.getAlbumId());
+				}
 			}
 			
 			String url = WebUtils.getParameter(multiPartRequest, "url");
