@@ -51,7 +51,7 @@
 							<a href="/secure/albums.jsp">Albums</a>
 						</li>
 						<li>
-							<a href="#buscar">Buscar</a>
+							<a href="/secure/search.jsp">Buscar</a>
 						</li>
 	
 						<li>

@@ -37,7 +37,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Albums</title>
+<title>Buscar</title>
 <meta name="GUI para aplicación is2011" content="">
 <meta name="Grupo 4 - ¿nombre?" content="">
 <!--[if lt IE 9]>
@@ -63,7 +63,7 @@ body {
 	<div class="topbar">
 		<div class="topbar-inner">
 			<div class="container">
-				<a class="brand" href="/secure/albums.jsp">Albums</a>
+				<a class="brand" href="/secure/search.jsp">Buscar</a>
 				<ul class="nav">
 					<li class="active"><a href="/secure/main.jsp">Inicio</a></li>
 					<li><a href="/secure/search.jsp">Buscar</a></li>
@@ -78,33 +78,19 @@ body {
 	<div class="container">
 		<div class="content">
 			<div class="row">
-				<form id="album_form" name="album_form" method="post"
-					action="/secure/albums.jsp">
-					<label for="mediumSelect">Seleccion del album: </label>
-					<div class="input">
-						<select class="medium" id="album_id" name="album_id"
-							onchange="javascript:document.album_form.submit();">
-							<option value="Elegir">Elegir</option>
-							<%
-								Set<AlbumEy> albums = searchPicturesModel
-										.getAlbumsToBeDisplayedByUser(user.getNombreUsr());
-
-								for (AlbumEy album : albums) {
-							%>
-							<option value="<%=album.getAlbumId()%>"><%=album.getAlbumId()%></option>
-							<%
-								}
-							%>
-						</select>
+				<form id="search_form" name="search_form" method="post" action="/secure/search.jsp">
+					<div class="clearfix">
+						<div class="span16">
+							<div class="input">
+								<input id="search_value" name="search_value" type="text" />  	   <input class="btn primary" type="submit" name="search" value="Buscar">
+							</div>
+						</div>
 					</div>
 				</form>
 			</div>
 			<%
-				if (StringUtils.isNotBlank(WebUtils.getParameter(request,
-						"album_id"))) {
-					List<PictureEy> pictures = searchPicturesModel
-							.getPictureByAlbum(WebUtils.getParameter(request,
-									"album_id"));
+				if (StringUtils.isNotBlank(WebUtils.getParameter(request,"search_value"))) {
+					List<PictureEy> pictures = searchPicturesModel.getPicturesByTags(WebUtils.getParameter(request, "search_value"));
 					Iterator<PictureEy> iterator = pictures.iterator();
 			%>
 			<table>

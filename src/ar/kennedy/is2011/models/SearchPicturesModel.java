@@ -24,13 +24,8 @@ public class SearchPicturesModel extends AbstractModel {
 	private static final String LAST_PICTURE_UPLOAD_BY_USER_QUERY = "SELECT e FROM PictureEy e WHERE e.username = :1 ORDER BY e.dateCreated DESC";
 	private static final String ALBUMS_TO_BE_DISPAYED_BY_VISIBILITY_QUERY = "SELECT a FROM AlbumEy a WHERE a.visibility = :1";
 	private static final String ALBUMS_TO_BE_DISPAYED_BY_OWNER_QUERY = "SELECT a FROM AlbumEy a WHERE a.owner = :1";
-	@SuppressWarnings("unused")
-	private static final String PICTURES_TO_BE_DISPAYED_BY_USER_QUERY = "SELECT e FROM PictureEy e WHERE e.albumId IN (:1)";
 	private static final String PICTURE_BY_ALBUM_QUERY = "SELECT e FROM PictureEy e WHERE e.albumId = :1";
 	private static final String ALL_ALBUMS = "SELECT a FROM AlbumEy a ";
-
-	
-private static final String PICTURE_BY_TAGS = "SELECT e FROM PictureEy e WHERE e.tags IN (:1)";
 	
 	public SearchPicturesModel() {
 		super();
@@ -65,14 +60,18 @@ private static final String PICTURE_BY_TAGS = "SELECT e FROM PictureEy e WHERE e
 		}
 	}
 	
-	public List<PictureEy> getPicturesByTags(Vector<Object> tags) {
-		List<PictureEy> pictures = null;
+	public List<PictureEy> getPicturesByTags(String value) {
+		List<PictureEy> pictures = new ArrayList<PictureEy>();
 
 		try {
-			pictures = pictureDao.createCollectionQuery(PICTURE_BY_TAGS, tags);
+			for(PictureEy picture : pictureDao.select(PictureEy.class)) {
+				if(picture.getTags().contains(value)) {
+					pictures.add(picture);
+				}
+			}
 
 		} catch (EntityNotFoundException e) {
-			return new ArrayList<PictureEy>();
+			return pictures;
 		}
 
 		return pictures;
