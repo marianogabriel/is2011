@@ -56,7 +56,7 @@ public class ImageUploaderModel extends AbstractModel {
 			WebUtils.validateMandatoryParameters(multiPartRequest, new String[] {"picture_name", "album_id"});
 			
 			String pictureName = WebUtils.getParameter(multiPartRequest, "picture_name");
-			if(!StringUtils.isAlphanumeric(pictureName)) {
+			if(!StringUtils.isAlphanumericSpace(pictureName)) {
 				formErrors.put("picture_name", "El campo debe ser alfanumerico");
 			
 			} else {
@@ -69,8 +69,20 @@ public class ImageUploaderModel extends AbstractModel {
 			
 			} else {
 				try {
-					picture.setAlbumId(albumDao.findById(AlbumEy.class, albumId.substring(0, albumId.indexOf(";"))).getAlbumId());
-				
+					if(isNewAlbum(albumId)) {
+						AlbumEy album = albumDao.findById(AlbumEy.class, albumId.substring(0, albumId.indexOf(";")));
+						
+						if("public".equals(album.getAlbumId())) {
+							picture.setAlbumId(album.getAlbumId());
+						
+						} else {
+							formErrors.put("album_id", "El album ya existe");
+						}
+					
+					} else {
+						picture.setAlbumId(albumId);
+					}
+						
 				} catch (EntityNotFoundException e) {
 					AlbumEy nuevoAlbum = new AlbumEy();
 					nuevoAlbum.setAlbumId(albumId.substring(0, albumId.indexOf(";")));
@@ -153,6 +165,10 @@ public class ImageUploaderModel extends AbstractModel {
 		WebUtils.validateMandatoryParameters(request, new String[] {"id"});
 		
 		pictureDao.remove(PictureEy.class, WebUtils.getParameter(request, "id"));
+	}
+	
+	private Boolean isNewAlbum(String value) {
+		return value.indexOf(";") > 0;
 	}
 	
 	/*

@@ -32,6 +32,24 @@
 		
 		return list.toString();
 	}
+	
+	private String getAllAlbumsToBeDisplayedByUser(Set<AlbumEy> albums) {
+		StringBuilder splitAlbums = new StringBuilder();
+		
+		int i = 0;
+		for(AlbumEy album : albums) {
+			if(i == (albums.size() - 1)) {
+				splitAlbums.append("'").append(album.getAlbumId()).append("'");
+				
+			} else {
+				splitAlbums.append("'").append(album.getAlbumId()).append("'").append(", ");
+			}
+			
+			i++;
+		}
+		
+		return splitAlbums.toString();
+	}
 %>
 <%
 	Session userSession = SessionManager.get(request, WebUtils.getSessionIdentificator(request));
@@ -213,7 +231,7 @@ body {
 
 <script language="JavaScript"> 
 	function cargarAlbums() {
-		var list = [<%= getAllAlbumsList(searchPicturesModel.getAllAlbums()) %>];
+		var albumsToBeDisplayedByUser = [<%= getAllAlbumsToBeDisplayedByUser(searchPicturesModel.getAlbumsToBeDisplayedByUser(user.getNombreUsr())) %>]
 		var selectedOption = document.getElementById('album_id').options[document.getElementById('album_id').selectedIndex].value;
 		
 		var combo = document.getElementById('album_id');
@@ -227,10 +245,10 @@ body {
 			combo.options.add(new Option('Elegir', 'Elegir'));
 		}
 		
-		for (i=0; i < list.length; i++)
+		for (i=0; i < albumsToBeDisplayedByUser.length; i++)
 		{
 			//Añadir los elementos de la lista
-		 	combo.options.add(new Option(list[i], list[i]));
+		 	combo.options.add(new Option(albumsToBeDisplayedByUser[i], albumsToBeDisplayedByUser[i]));
 		}
 
 		//Agrero la opcion Crear nuevo album
@@ -269,27 +287,22 @@ body {
 	function existeAlbum(name) {
 		//recorro combo en busca de este valor
 		var combo = document.getElementById('album_id');
-
+		var allAlbums = [<%= getAllAlbumsList(searchPicturesModel.getAllAlbums()) %>];
+		var exist = false;
+		
 		for (i=0;i<combo.length;i++) {
 			if(name == combo.options[i].value) { 
-				return true;
+				exist = true;
 			}
 		}
 
-		return false;
-	}
-	
-
-	function Abrir_ventana (pagina) {
-		var opciones="toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, width=250, height=250, top=85, left=140"; modal=yes;
-		
-		if (window.showModalDialog) {
-			window.showModalDialog(pagina,"","dialogWidth:255px;dialogHeight:250px");
-		} 
-		else 
-		{
-			window.open(pagina,"",opciones);
+		for (i=0;i<allAlbums.length;i++) {
+			if(name == allAlbums[i].value) { 
+				exist = true;
+			}
 		}
+
+		return exist;
 	}
 </script>
 			</form>

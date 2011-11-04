@@ -173,8 +173,7 @@ form .input {
 									<option value="6">Nombre del primer colegio?</option>
 								</select> <span class="help-block">(Nombre de mascota, película
 									favorita, deporte favorito, etc)</span> <input type="text"
-									name="respuestaSecreta" id="psec"
-									value="${usuarioNoRegistrado.respuestaSecreta }">
+									name="respuestaSecreta" id="psec" value="${usuarioNoRegistrado.respuestaPregunta}">
 							</div>
 						</div>
 					</div>

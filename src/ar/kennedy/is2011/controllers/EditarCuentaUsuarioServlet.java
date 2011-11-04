@@ -50,7 +50,8 @@ public class EditarCuentaUsuarioServlet extends HttpServlet{
 		  usuario.setRespuestaPregunta(resp);
 		  	
 		  serv.modificarUsuario(usuario);
-		  request.getRequestDispatcher("secure/editarCuentaUsuario.jsp").forward(request, response);	
+		  sesion.setAttribute("usuarioLogeado", usuario);
+		  request.getRequestDispatcher("secure/editarCuentaUsuario.jsp").forward(request, response);
 		
 		} else {
 			request.getRequestDispatcher("errorLogin.jsp").forward(request, response);  	
